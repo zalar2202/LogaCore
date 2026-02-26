@@ -43,11 +43,16 @@ ENV NEXT_TELEMETRY_DISABLED 1
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# The standalone output includes the full project structure.
 # COPY the standalone folder and then the static assets into their proper locations.
 COPY --from=builder /app/apps/demo-agency-portal/public ./apps/demo-agency-portal/public
 COPY --from=builder --chown=nextjs:nodejs /app/apps/demo-agency-portal/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/apps/demo-agency-portal/.next/static ./apps/demo-agency-portal/.next/static
+
+# Copy plugins for migrations (SQL files) and the compiled migration runner
+COPY --from=builder --chown=nextjs:nodejs /app/plugins ./plugins
+COPY --from=builder --chown=nextjs:nodejs /app/packages/core/dist ./packages/core/dist
+COPY --from=builder --chown=nextjs:nodejs /app/packages/core/node_modules ./packages/core/node_modules
+COPY --from=builder --chown=nextjs:nodejs /app/packages/db/node_modules ./packages/db/node_modules
 
 USER nextjs
 
@@ -55,5 +60,5 @@ EXPOSE 3000
 ENV PORT 3000
 ENV HOSTNAME "0.0.0.0"
 
-# In a monorepo, the server.js is nested at the app path
-CMD ["node", "apps/demo-agency-portal/server.js"]
+# Run migrations and then start the server
+CMD node packages/core/dist/src/migrations/runner.js && node apps/demo-agency-portal/server.js
