@@ -22,12 +22,12 @@ Related reference docs:
 
 # Day 1 – Architecture Lock-In + Spec Adoption
 
-- [ ] Confirm and freeze decisions in the Decisions Log (no more stack churn)
-- [ ] Adopt **Plugin Interface Spec** as the contract (fields, naming, conventions)
-- [ ] Adopt **Plugin Lifecycle Policy** (Install/Enable/Disable/Remove/Uninstall)
-- [ ] Confirm API choice: **tRPC for internal**
-- [ ] Confirm DB access layer: **Drizzle**
-- [ ] Define “Included vs Enabled” concept (even if runtime toggling is v1+)
+- [x] Confirm and freeze decisions in the Decisions Log (no more stack churn)
+- [x] Adopt **Plugin Interface Spec** as the contract (fields, naming, conventions)
+- [x] Adopt **Plugin Lifecycle Policy** (Install/Enable/Disable/Remove/Uninstall)
+- [x] Confirm API choice: **tRPC for internal**
+- [x] Confirm DB access layer: **Drizzle**
+- [x] Define “Included vs Enabled” concept (even if runtime toggling is v1+)
 
 Deliverable:
 Team aligned on contracts and rules. No ambiguity.
@@ -36,15 +36,15 @@ Team aligned on contracts and rules. No ambiguity.
 
 # Day 2 – Core Contracts (TypeScript)
 
-- [ ] Implement strict TS types for:
-  - [ ] `definePlugin()` / `PluginDefinition`
-  - [ ] `defineConfig()` / `LogaCoreConfig`
-  - [ ] Registry types (nav/pages/permissions/api/db/hooks)
-- [ ] Implement core validation plan (type-level + runtime checks):
-  - [ ] Unique plugin IDs
-  - [ ] Duplicate admin paths
-  - [ ] Dependency checks (dependsOn)
-  - [ ] Core version compatibility field present (range check can be stubbed)
+- [x] Implement strict TS types for:
+  - [x] `definePlugin()` / `PluginDefinition`
+  - [x] `defineConfig()` / `LogaCoreConfig`
+  - [x] Registry types (nav/pages/permissions/api/db/hooks)
+- [x] Implement core validation plan (type-level + runtime checks):
+  - [x] Unique plugin IDs
+  - [x] Duplicate admin paths
+  - [x] Dependency checks (dependsOn)
+  - [x] Core version compatibility field present (range check can be stubbed)
 
 Deliverable:
 Core types exported and used by a sample plugin without `any`.
@@ -53,15 +53,15 @@ Core types exported and used by a sample plugin without `any`.
 
 # Day 3 – Plugin Loader + Registry Builder (Build-time)
 
-- [ ] Implement `loadPlugins(config)` (build-time inclusion)
-- [ ] Build the final registry object:
-  - [ ] permissions list
-  - [ ] admin nav items
-  - [ ] admin pages
-  - [ ] tRPC routers (namespaced)
-  - [ ] db migration sources
-  - [ ] hooks
-- [ ] Ensure registry build fails fast with actionable error messages
+- [x] Implement `loadPlugins(config)` (build-time inclusion)
+- [x] Build the final registry object:
+  - [x] permissions list
+  - [x] admin nav items
+  - [x] admin pages
+  - [x] tRPC routers (namespaced)
+  - [x] db migration sources
+  - [x] hooks
+- [x] Ensure registry build fails fast with actionable error messages
 
 Deliverable:
 Registry builds deterministically from `logacore.config.ts`.
