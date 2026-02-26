@@ -1,0 +1,21 @@
+services:
+  logacore-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: logacore-production
+    restart: always
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+      - NEXTAUTH_URL=https://logatech.cloud
+      - NEXT_PUBLIC_APP_URL=https://logatech.cloud
+    ports:
+      - "3000:3000"
+    networks:
+      - logatech-network
+
+networks:
+  logatech-network:
+    external: true
+    name: coolify
