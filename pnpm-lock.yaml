@@ -50,6 +50,9 @@ importers:
       '@logacore/core':
         specifier: workspace:*
         version: link:../../packages/core
+      '@logacore/plugin-hello-world':
+        specifier: workspace:*
+        version: link:../../plugins/hello-world
       next:
         specifier: 16.1.6
         version: 16.1.6(@babel/core@7.29.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -119,6 +122,15 @@ importers:
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
+
+  plugins/hello-world:
+    dependencies:
+      '@logacore/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      react:
+        specifier: '>=19.0.0'
+        version: 19.2.4
 
 packages:
 

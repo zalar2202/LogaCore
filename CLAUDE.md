@@ -97,4 +97,4 @@ For deeper context, read these in `docs/v.01/`:
 - [x] RBAC (can, Require)
 - [ ] tRPC integration
 - [ ] Auth wiring (NextAuth)
-- [ ] First plugin (hello-world)
+- [x] First plugin (hello-world)

@@ -1,0 +1,12 @@
+{
+  "name": "@logacore/plugin-hello-world",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "dependencies": {
+    "@logacore/core": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": ">=19.0.0"
+  }
+}
