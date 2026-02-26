@@ -48,11 +48,13 @@ COPY --from=builder /app/apps/demo-agency-portal/public ./apps/demo-agency-porta
 COPY --from=builder --chown=nextjs:nodejs /app/apps/demo-agency-portal/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/apps/demo-agency-portal/.next/static ./apps/demo-agency-portal/.next/static
 
-# Copy plugins for migrations (SQL files) and the compiled migration runner
+# Copy plugins for migrations (SQL files) 
 COPY --from=builder --chown=nextjs:nodejs /app/plugins ./plugins
+# Copy the compiled migration runner
 COPY --from=builder --chown=nextjs:nodejs /app/packages/core/dist ./packages/core/dist
-COPY --from=builder --chown=nextjs:nodejs /app/packages/core/node_modules ./packages/core/node_modules
-COPY --from=builder --chown=nextjs:nodejs /app/packages/db/node_modules ./packages/db/node_modules
+# Copy the startup script
+COPY --from=builder --chown=nextjs:nodejs /app/scripts/docker-start.sh ./scripts/docker-start.sh
+RUN chmod +x ./scripts/docker-start.sh
 
 USER nextjs
 
@@ -60,5 +62,5 @@ EXPOSE 3000
 ENV PORT 3000
 ENV HOSTNAME "0.0.0.0"
 
-# Run migrations and then start the server
-CMD node packages/core/dist/src/migrations/runner.js && node apps/demo-agency-portal/server.js
+# Use the startup script
+CMD ["sh", "./scripts/docker-start.sh"]
