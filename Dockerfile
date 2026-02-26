@@ -12,6 +12,7 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY apps/demo-agency-portal/package.json ./apps/demo-agency-portal/
 COPY packages/core/package.json ./packages/core/
 COPY packages/db/package.json ./packages/db/
+COPY plugins/hello-world/package.json ./plugins/hello-world/
 
 RUN pnpm install --frozen-lockfile
 
@@ -22,6 +23,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY --from=deps /app/apps/demo-agency-portal/node_modules ./apps/demo-agency-portal/node_modules
 COPY --from=deps /app/packages/core/node_modules ./packages/core/node_modules
 COPY --from=deps /app/packages/db/node_modules ./packages/db/node_modules
+COPY --from=deps /app/plugins/hello-world/node_modules ./plugins/hello-world/node_modules
 COPY . .
 
 # Install pnpm in builder
