@@ -11,7 +11,7 @@ services:
       - NEXTAUTH_URL=https://logatech.cloud
       - NEXT_PUBLIC_APP_URL=https://logatech.cloud
     ports:
-      - '3000:3000'
+      - '3333:3000'
     networks:
       - logatech-network
 
