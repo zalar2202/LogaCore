@@ -1,15 +1,16 @@
 #!/bin/sh
 
-echo "🚀 Starting LogaCore..."
-echo "📂 Current directory: $(pwd)"
-echo "📡 Checking database connection..."
+echo "🚀 Starting LogaCore Service..."
+echo "📂 Working directory: $(pwd)"
 
-# Run migrations
-# We use || true to ensure that even if migrations fail, the server tries to start
-# (This prevents the restart loop so you can actually see the logs)
-echo "🏃 Running migrations..."
-node packages/core/dist/src/migrations/runner.js || echo "⚠️ Migrations failed, but attempting to start server anyway..."
+# 1. Run migrations
+echo "📡 Initializing database migrations..."
+# Use absolute path relative to /app
+node ./packages/core/dist/src/migrations/runner.js || {
+  echo "⚠️ Migrations reported an error, but we'll try to start the server anyway to allow log inspection."
+}
 
-echo "🌐 Starting Next.js server..."
-# Start the Next.js server (standalone mode)
-node apps/demo-agency-portal/server.js
+# 2. Start the application
+echo "🌐 Starting Next.js Production Server..."
+# Standalone server is at /app/apps/demo-agency-portal/server.js in Next.js 14+
+node ./apps/demo-agency-portal/server.js

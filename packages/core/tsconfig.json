@@ -5,6 +5,12 @@
     "rootDir": ".",
     "jsx": "react-jsx"
   },
-  "include": ["index.ts", "src/**/*"],
-  "exclude": ["node_modules", "dist", "src/migrations"]
+  "include": [
+    "index.ts",
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }
