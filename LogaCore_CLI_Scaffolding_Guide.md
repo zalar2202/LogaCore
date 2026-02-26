@@ -46,10 +46,10 @@ In v0.1, LogaCore operates inside a monorepo.
 Structure example:
 
 logacore/
-  apps/
-  packages/
-  plugins/
-  docs/
+apps/
+packages/
+plugins/
+docs/
 
 Plugins are NOT copied into the app folder.
 They exist under `/plugins` and are linked using pnpm workspaces.
@@ -92,6 +92,7 @@ A preset defines:
 Example: Agency Preset
 
 Includes:
+
 - CMS
 - Invoices
 - Email
@@ -104,11 +105,11 @@ logacore.config.ts
 Example:
 
 export default defineConfig({
-  plugins: [
-    "@logacore/plugin-cms",
-    "@logacore/plugin-invoices",
-    "@logacore/plugin-email"
-  ]
+plugins: [
+"@logacore/plugin-cms",
+"@logacore/plugin-invoices",
+"@logacore/plugin-email"
+]
 });
 
 ---
@@ -149,7 +150,7 @@ Removing a plugin from config requires rebuild.
 After scaffold:
 
 1. Developer runs:
-       pnpm db:migrate
+   pnpm db:migrate
 
 2. Core migration runner:
    - Detects plugin migrations

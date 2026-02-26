@@ -1,32 +1,32 @@
 # LogaCore v0.1 Technical Architecture Blueprint
 
-------------------------------------------------------------------------
+---
 
 ## 0) v0.1 Scope and Non-goals
 
 ### Goals
 
--   Scaffold new apps reliably from a single foundation
--   Provide a Core system supporting:
-    -   Authentication + Role-Based Access Control (RBAC)
-    -   Admin shell (layout + navigation + plugin injection)
-    -   Plugin loader + plugin manifest system
-    -   Database + migrations baseline
-    -   Shared UI kit + design tokens
--   Deliver 2--3 real plugins to validate architecture:
-    -   CMS / Blog
-    -   Invoicing or CRM
-    -   Basic Email module
+- Scaffold new apps reliably from a single foundation
+- Provide a Core system supporting:
+  - Authentication + Role-Based Access Control (RBAC)
+  - Admin shell (layout + navigation + plugin injection)
+  - Plugin loader + plugin manifest system
+  - Database + migrations baseline
+  - Shared UI kit + design tokens
+- Deliver 2--3 real plugins to validate architecture:
+  - CMS / Blog
+  - Invoicing or CRM
+  - Basic Email module
 
 ### Non-goals (Avoid Overengineering)
 
--   Plugin marketplace
--   Multi-tenant SaaS hosting
--   Visual page builder
--   Full WordPress replacement
--   Perfect backwards compatibility
+- Plugin marketplace
+- Multi-tenant SaaS hosting
+- Visual page builder
+- Full WordPress replacement
+- Perfect backwards compatibility
 
-------------------------------------------------------------------------
+---
 
 ## 1) Repository Strategy
 
@@ -38,23 +38,23 @@ db/ cli/ plugins/ cms/ invoices/ email/
 Why this matters: - Plugins are importable packages - Version control
 per module - Isolation and testability - Clear separation of concerns
 
-------------------------------------------------------------------------
+---
 
 ## 2) Tech Stack (v0.1)
 
--   Next.js (App Router)
--   TypeScript
--   PostgreSQL
--   Prisma or Drizzle (DB layer)
--   NextAuth/Auth.js or custom auth
--   Zod (validation)
--   tRPC or REST (choose and commit)
--   TailwindCSS + shadcn/ui
--   Queue system postponed unless required
+- Next.js (App Router)
+- TypeScript
+- PostgreSQL
+- Prisma or Drizzle (DB layer)
+- NextAuth/Auth.js or custom auth
+- Zod (validation)
+- tRPC or REST (choose and commit)
+- TailwindCSS + shadcn/ui
+- Queue system postponed unless required
 
 Principle: Choose stable, proven tools and avoid constant stack changes.
 
-------------------------------------------------------------------------
+---
 
 ## 3) Core Package Responsibilities
 
@@ -64,7 +64,7 @@ validation
 
 Core must NOT: - Contain business logic - Hardcode feature pages
 
-------------------------------------------------------------------------
+---
 
 ## 4) Plugin System Design
 
@@ -72,12 +72,12 @@ Core must NOT: - Contain business logic - Hardcode feature pages
 
 Each plugin exports a structured definition:
 
-``` ts
+```ts
 export const plugin = definePlugin({
-  id: "cms",
-  name: "CMS",
-  version: "0.1.0",
-  requiredCoreVersion: "^0.1.0",
+  id: 'cms',
+  name: 'CMS',
+  version: '0.1.0',
+  requiredCoreVersion: '^0.1.0',
 
   permissions: [],
 
@@ -92,8 +92,8 @@ export const plugin = definePlugin({
   },
 
   db: {
-    migrationsPath: "./migrations",
-    seed: async () => {}
+    migrationsPath: './migrations',
+    seed: async () => {},
   },
 
   hooks: {
@@ -115,40 +115,40 @@ Configured explicitly per app:
 
 apps/demo-agency-portal/logacore.config.ts
 
-``` ts
+```ts
 export default defineConfig({
   plugins: [
-    "@logacore/plugin-cms",
-    "@logacore/plugin-invoices",
-    "@logacore/plugin-email"
-  ]
+    '@logacore/plugin-cms',
+    '@logacore/plugin-invoices',
+    '@logacore/plugin-email',
+  ],
 });
 ```
 
 Core loads plugins at build time.
 
-------------------------------------------------------------------------
+---
 
 ## 5) Admin UI Architecture
 
 ### Core Provides:
 
--   /admin layout
--   Sidebar + topbar
--   RBAC gate
--   Standard page container
--   Navigation registry
+- /admin layout
+- Sidebar + topbar
+- RBAC gate
+- Standard page container
+- Navigation registry
 
 ### Plugins Provide:
 
--   Pages (React components)
--   Navigation items
--   Dashboard widgets
+- Pages (React components)
+- Navigation items
+- Dashboard widgets
 
 Routing strategy: - Core owns /admin root layout - Plugins register
 slug-based routes - Use catch-all routing for resolution via registry
 
-------------------------------------------------------------------------
+---
 
 ## 6) Permissions Model (RBAC)
 
@@ -162,7 +162,7 @@ Core provides: - can(user, "permission.key") -
 
 Plugins must NOT implement independent permission logic.
 
-------------------------------------------------------------------------
+---
 
 ## 7) Database & Migrations
 
@@ -171,7 +171,7 @@ migration runner executes in order
 
 Advantages: - True modularity - No Prisma schema merging complexity
 
-------------------------------------------------------------------------
+---
 
 ## 8) API Layer
 
@@ -184,7 +184,7 @@ middleware
 
 Core owns authentication and middleware.
 
-------------------------------------------------------------------------
+---
 
 ## 9) CLI Scaffolding
 
@@ -194,7 +194,7 @@ Portal - Content Site - Ecommerce (future)
 CLI generates: - Next.js app - logacore.config.ts - Plugin list - Env
 template - Admin shell wiring
 
-------------------------------------------------------------------------
+---
 
 ## 10) Presets
 
@@ -208,7 +208,7 @@ Preset: Content Site - Core + CMS + SEO + Email
 
 Presets reduce complexity and improve usability.
 
-------------------------------------------------------------------------
+---
 
 ## 11) Engineering Rules
 
@@ -222,7 +222,7 @@ Non-negotiable:
 6.  Single source of configuration truth
 7.  Refactor aggressively in early stages
 
-------------------------------------------------------------------------
+---
 
 ## 12) v0.1 Milestones
 
@@ -235,7 +235,7 @@ Milestone 3: - Second plugin validation
 
 Milestone 4: - CLI scaffolding
 
-------------------------------------------------------------------------
+---
 
 ## 13) Initial Coding Tasks
 
@@ -246,7 +246,7 @@ Milestone 4: - CLI scaffolding
 5.  Create test plugin injecting navigation + page
 6.  Implement migration runner
 
-------------------------------------------------------------------------
+---
 
 ## Strategic Reminder
 

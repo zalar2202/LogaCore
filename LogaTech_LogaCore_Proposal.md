@@ -2,7 +2,7 @@
 
 ## Working Title: LogaCore
 
-------------------------------------------------------------------------
+---
 
 ## Executive Summary
 
@@ -23,67 +23,67 @@ future-proofs LogaTech's service model.
 This framework will initially remain internal and be refined across
 real-world deployments before any public release is considered.
 
-------------------------------------------------------------------------
+---
 
 ## Strategic Context
 
 ### Current Situation
 
--   Repetitive logic across projects
--   Growing shift toward Next.js
--   Lack of architectural standardization
--   Increasing need for deployment control and scalability
+- Repetitive logic across projects
+- Growing shift toward Next.js
+- Lack of architectural standardization
+- Increasing need for deployment control and scalability
 
 ### Opportunity
 
 Create a reusable internal engine that accelerates delivery, improves
 quality, and eliminates plugin dependency chaos.
 
-------------------------------------------------------------------------
+---
 
 ## WordPress vs Custom Platform
 
 ### WordPress Strengths
 
--   Mature ecosystem
--   Massive plugin library
--   Familiar to clients
--   SEO maturity
--   Low hosting complexity
+- Mature ecosystem
+- Massive plugin library
+- Familiar to clients
+- SEO maturity
+- Low hosting complexity
 
 ### WordPress Limitations
 
--   Heavy plugin dependency
--   Update conflicts
--   Performance constraints
--   Security exposure
--   Limited flexibility for complex workflows
--   Difficult AI-native integrations
+- Heavy plugin dependency
+- Update conflicts
+- Performance constraints
+- Security exposure
+- Limited flexibility for complex workflows
+- Difficult AI-native integrations
 
-------------------------------------------------------------------------
+---
 
 ## LogaTech Strengths
 
--   Full-stack control (Code → Cloud)
--   DevOps and deployment ownership
--   AI-assisted development workflow
--   Modern architecture proficiency
--   Agile engineering team
+- Full-stack control (Code → Cloud)
+- DevOps and deployment ownership
+- AI-assisted development workflow
+- Modern architecture proficiency
+- Agile engineering team
 
-------------------------------------------------------------------------
+---
 
 ## Proposed Solution: LogaCore
 
 ### Core Engine
 
--   Authentication & role management
--   Permission system
--   Database abstraction
--   Admin UI framework
--   Plugin loader system
--   Event hook system
--   SEO infrastructure
--   Deployment configuration
+- Authentication & role management
+- Permission system
+- Database abstraction
+- Admin UI framework
+- Plugin loader system
+- Event hook system
+- SEO infrastructure
+- Deployment configuration
 
 ### Plugin Architecture
 
@@ -93,74 +93,74 @@ events
 
 ### Example Plugins
 
--   Blog / CMS
--   E-commerce
--   CRM
--   Invoicing
--   Accounting
--   Email marketing
--   AI assistant
--   Client portal
--   Analytics
--   Automation workflows
+- Blog / CMS
+- E-commerce
+- CRM
+- Invoicing
+- Accounting
+- Email marketing
+- AI assistant
+- Client portal
+- Analytics
+- Automation workflows
 
-------------------------------------------------------------------------
+---
 
 ## Phase 1 Objectives (Internal Only)
 
--   Reduce development time by 40--60%
--   Standardize architecture
--   Eliminate repetitive logic recreation
--   Improve deployment consistency
--   Increase security and performance control
+- Reduce development time by 40--60%
+- Standardize architecture
+- Eliminate repetitive logic recreation
+- Improve deployment consistency
+- Increase security and performance control
 
 No public release during Phase 1.
 
-------------------------------------------------------------------------
+---
 
 ## Long-Term Possibilities
 
 After 5--10 successful internal deployments:
 
--   Keep internal as agency advantage
--   Open-source core
--   Sell premium plugins
--   Launch developer product
--   Convert into SaaS platform
+- Keep internal as agency advantage
+- Open-source core
+- Sell premium plugins
+- Launch developer product
+- Convert into SaaS platform
 
 Decision postponed until maturity is proven.
 
-------------------------------------------------------------------------
+---
 
 ## SWOT Analysis
 
 ### Strengths
 
--   Technical expertise
--   AI-driven workflow
--   Infrastructure ownership
--   Agility
+- Technical expertise
+- AI-driven workflow
+- Infrastructure ownership
+- Agility
 
 ### Weaknesses
 
--   Small team
--   Limited documentation bandwidth
--   No established community
+- Small team
+- Limited documentation bandwidth
+- No established community
 
 ### Opportunities
 
--   Growing dissatisfaction with plugin bloat
--   Demand for AI-native systems
--   Need for performance-first architectures
+- Growing dissatisfaction with plugin bloat
+- Demand for AI-native systems
+- Need for performance-first architectures
 
 ### Threats
 
--   Established CMS ecosystems
--   Boilerplate market saturation
--   Maintenance burden
--   Scope creep
+- Established CMS ecosystems
+- Boilerplate market saturation
+- Maintenance burden
+- Scope creep
 
-------------------------------------------------------------------------
+---
 
 ## Strategic Philosophy
 

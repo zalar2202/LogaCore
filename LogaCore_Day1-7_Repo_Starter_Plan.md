@@ -5,6 +5,7 @@
 ## Week Goal
 
 Ship a working vertical slice:
+
 - Monorepo
 - Core package
 - Plugin loader

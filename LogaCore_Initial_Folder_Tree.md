@@ -3,38 +3,38 @@
 logacore/
 │
 ├── apps/
-│   ├── demo-agency-portal/
-│   └── demo-ecommerce/
+│ ├── demo-agency-portal/
+│ └── demo-ecommerce/
 │
 ├── packages/
-│   ├── core/
-│   │   ├── src/
-│   │   └── index.ts
-│   │
-│   ├── ui/
-│   │   ├── components/
-│   │   └── theme/
-│   │
-│   ├── db/
-│   │   ├── migrations/
-│   │   └── runner.ts
-│   │
-│   └── cli/
+│ ├── core/
+│ │ ├── src/
+│ │ └── index.ts
+│ │
+│ ├── ui/
+│ │ ├── components/
+│ │ └── theme/
+│ │
+│ ├── db/
+│ │ ├── migrations/
+│ │ └── runner.ts
+│ │
+│ └── cli/
 │
 ├── plugins/
-│   ├── hello-world/
-│   │   ├── src/
-│   │   ├── migrations/
-│   │   └── index.ts
-│   │
-│   ├── cms/
-│   ├── invoices/
-│   └── email/
+│ ├── hello-world/
+│ │ ├── src/
+│ │ ├── migrations/
+│ │ └── index.ts
+│ │
+│ ├── cms/
+│ ├── invoices/
+│ └── email/
 │
 ├── docs/
-│   ├── architecture.md
-│   ├── plugin-authoring.md
-│   └── decisions.md
+│ ├── architecture.md
+│ ├── plugin-authoring.md
+│ └── decisions.md
 │
 ├── package.json
 ├── pnpm-workspace.yaml

@@ -1,7 +1,9 @@
 # LogaCore v0.1 – Role 1 Checklist (v0.1.1)
+
 ## Architect / Frontend / Backend Engineer
 
 This checklist reflects the **current agreed architecture**:
+
 - Next.js (App Router) + TypeScript
 - Internal APIs via **tRPC**
 - Auth via **NextAuth/Auth.js** (wrapped by core)
@@ -10,6 +12,7 @@ This checklist reflects the **current agreed architecture**:
 - Plugins included at **build time**, with future-ready runtime enable/disable policy
 
 Related reference docs:
+
 - LogaCore_Plugin_Interface_Spec_v0.1.md
 - LogaCore_Plugin_Lifecycle_Policy.md
 - LogaCore_CLI_Scaffolding_Guide.md

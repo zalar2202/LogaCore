@@ -1,7 +1,9 @@
 # LogaCore v0.1 – Role 2 Checklist (v0.1.1)
+
 ## DevOps / Deployment / Database Engineer
 
 This checklist reflects the **current agreed architecture**:
+
 - Monorepo with **pnpm workspaces**
 - DB: **PostgreSQL**
 - DB layer: **Drizzle** (team-owned modules, no central schema merge)
@@ -10,6 +12,7 @@ This checklist reflects the **current agreed architecture**:
 - Deployment baseline (staging)
 
 Related reference docs:
+
 - LogaCore_Plugin_Lifecycle_Policy.md
 - LogaCore_CLI_Scaffolding_Guide.md
 - LogaCore_Architectural_Decisions_Log_v0.1.md
@@ -19,9 +22,9 @@ Related reference docs:
 # Day 1 – Monorepo Setup (pnpm Workspaces)
 
 - [ ] Initialize pnpm workspace + workspace globs:
-  - [ ] apps/*
-  - [ ] packages/*
-  - [ ] plugins/*
+  - [ ] apps/\*
+  - [ ] packages/\*
+  - [ ] plugins/\*
 - [ ] Configure root scripts:
   - [ ] `dev`, `build`, `lint`, `typecheck`
 - [ ] Setup shared configs:

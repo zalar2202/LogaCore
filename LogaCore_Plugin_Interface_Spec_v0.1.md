@@ -42,13 +42,13 @@ A plugin must export a single plugin definition object, typically from `index.ts
 Example:
 
 ```ts
-import { definePlugin } from "@logacore/core";
+import { definePlugin } from '@logacore/core';
 
 export const plugin = definePlugin({
-  id: "cms",
-  name: "CMS",
-  version: "0.1.0",
-  requiredCoreVersion: "^0.1.0",
+  id: 'cms',
+  name: 'CMS',
+  version: '0.1.0',
+  requiredCoreVersion: '^0.1.0',
   // ...
 });
 ```
@@ -60,26 +60,32 @@ export const plugin = definePlugin({
 Every plugin MUST define:
 
 ### 4.1 `id: string`
+
 A globally unique identifier for the plugin.
 
 Rules:
+
 - Lowercase
 - Kebab-case (`cms`, `invoice-manager`, `email-marketing`)
 - Must be unique across all plugins included in an app
 - Should never change once published internally (treat as permanent)
 
 ### 4.2 `name: string`
+
 Human-readable display name used in UI and logs.
 
 ### 4.3 `version: string`
+
 Semantic version string (SemVer).
 Example: `0.1.0`
 
 ### 4.4 `requiredCoreVersion: string`
+
 The compatible core version range.
 Example: `^0.1.0`
 
 Purpose:
+
 - Core validates plugin compatibility at load time
 
 ---
@@ -87,15 +93,19 @@ Purpose:
 ## 5) Optional Metadata Fields
 
 ### 5.1 `description?: string`
+
 Short description for docs/admin plugin lists.
 
 ### 5.2 `author?: { name: string; url?: string }`
+
 Author metadata (useful for future marketplace readiness).
 
 ### 5.3 `dependsOn?: string[]`
+
 List of plugin IDs required for this plugin to work.
 
 Rules:
+
 - Must refer to `id` values of other plugins
 - Core must validate dependencies during build-time loading
 - Removal of a dependency should be blocked or warned
@@ -107,18 +117,21 @@ Rules:
 ## 6) Permissions Contract
 
 ### 6.1 `permissions?: PermissionDefinition[]`
+
 Plugins declare all permission keys they use.
 
 Permission key naming:
+
 - Prefix with plugin id
 - Use dot notation
-Examples:
+  Examples:
 - `cms.read`
 - `cms.write`
 - `invoices.create`
 - `invoices.approve`
 
 Why:
+
 - Core collects permission keys into registry
 - RBAC enforcement is centralized
 - Admin UI can show role permission options
@@ -128,12 +141,15 @@ Why:
 ## 7) Admin Integration Contract
 
 ### 7.1 `admin?: { ... }`
+
 All admin UI registration is done here.
 
 #### 7.1.1 `navItems?: NavItem[]`
+
 Defines sidebar/navigation items.
 
 Fields (recommended):
+
 - `id`: unique within plugin
 - `label`: text label
 - `href`: route path (e.g. `/admin/cms/posts`)
@@ -141,13 +157,16 @@ Fields (recommended):
 - `requiredPerms`: permission keys required to see this item
 
 Rules:
+
 - Paths must not collide with other plugins
 - `href` must point to a registered page
 
 #### 7.1.2 `pages?: AdminPage[]`
+
 Defines pages rendered inside the admin shell.
 
 Fields (recommended):
+
 - `id`: unique within plugin
 - `path`: route path (e.g. `/admin/cms/posts`)
 - `component`: React component reference
@@ -155,13 +174,16 @@ Fields (recommended):
 - `title`: optional page title
 
 Routing model (v0.1):
+
 - Admin uses catch-all route resolver (`/admin/[...slug]`)
 - Registry maps path → component
 
 #### 7.1.3 `widgets?: DashboardWidget[]`
+
 Optional dashboard widgets.
 
 Use cases:
+
 - summary cards
 - quick actions
 - recent activity lists
@@ -179,14 +201,17 @@ Plugins may register backend APIs.
 **Decision (v0.1):** Use tRPC internally.
 
 Recommended field:
+
 - `router?: TRPCRouter`
 
 Rules:
+
 - Routers must be namespaced (e.g. `cms.*`, `invoices.*`)
 - Core merges routers into a single app router
 - Procedures must validate input using Zod
 
 REST (future/optional):
+
 - If REST is needed, plugin may also provide route handlers
 - Business logic should live in shared services so tRPC and REST can both call it
 
@@ -199,10 +224,12 @@ REST (future/optional):
 Plugins own their schema evolution.
 
 Recommended fields:
+
 - `migrationsPath?: string` (defaults to `./migrations`)
 - `seed?: () => Promise<void>` optional seeding
 
 Migration rules:
+
 - Migrations are plain SQL files (`*.sql`)
 - File naming must ensure deterministic ordering
   Example:
@@ -214,6 +241,7 @@ Migration rules:
   - records applied state in `logacore_migrations` table
 
 Data preservation:
+
 - Removing plugin from build does NOT delete tables/data by default
 - Destructive uninstall must be explicit (see Plugin Lifecycle Policy)
 
@@ -226,12 +254,14 @@ Data preservation:
 Hooks allow plugins to respond to core lifecycle events.
 
 v0.1 recommended hooks:
+
 - `onInit?(ctx)` – called when app boots with registry loaded
 - `onInstall?(ctx)` – called when migrations complete for the first time (future-ready)
 - `onEnable?(ctx)` – called when plugin is enabled (future-ready)
 - `onDisable?(ctx)` – called when plugin is disabled (future-ready)
 
 Rules:
+
 - Hooks must be idempotent when possible
 - Hooks must not assume order relative to other plugins unless dependency is declared
 
@@ -244,11 +274,13 @@ Plugins should keep business logic in an internal service layer:
 - `plugins/<plugin>/src/services/*`
 
 Reasons:
+
 - UI and API can share the same logic
 - Enables future REST exposure without duplication
 - Improves testability
 
 Core rule:
+
 - UI should not directly manipulate DB
 - API should call services
 - Services use core DB client
@@ -266,6 +298,7 @@ Core must validate at load time:
 - No duplicate permission keys (optional strict mode)
 
 If validation fails:
+
 - Build should fail fast
 - Error message must be clear and actionable
 

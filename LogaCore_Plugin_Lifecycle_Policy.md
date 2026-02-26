@@ -3,6 +3,7 @@
 This document defines the official lifecycle rules for plugins inside LogaCore.
 
 The goal is to ensure:
+
 - Architectural consistency
 - Safe plugin removal
 - Data integrity
@@ -45,11 +46,13 @@ Definition:
 The plugin is included in the app configuration and migrations are executed.
 
 Triggered by:
+
 - Adding plugin to `logacore.config.ts`
 - Running migration process
 - Building and deploying the app
 
 Effects:
+
 - Plugin code becomes part of the build
 - Plugin migrations run
 - Required database tables created
@@ -71,6 +74,7 @@ Definition:
 Plugin is active at runtime.
 
 Effects:
+
 - Navigation items appear in admin
 - Routes become accessible
 - API procedures available
@@ -88,12 +92,14 @@ Definition:
 Plugin remains installed but inactive.
 
 Effects:
+
 - Navigation hidden
 - Routes blocked
 - API endpoints disabled
 - Background jobs paused
 
 Database:
+
 - All data remains intact
 - No schema changes occur
 
@@ -108,20 +114,24 @@ Definition:
 Plugin is removed from `logacore.config.ts` and app is rebuilt.
 
 Triggered by:
+
 - Removing plugin from config
 - Rebuilding and redeploying app
 
 Effects:
+
 - Plugin code excluded from build
 - No UI, routes, or APIs remain
 - Permissions removed from runtime registry
 
 Database:
+
 - Tables remain intact
 - Data preserved
 - Migration history preserved
 
 Re-adding plugin:
+
 - Previous data becomes available again
 - Settings restored
 - State continues from last known version
@@ -136,17 +146,20 @@ Definition:
 Plugin is removed AND all associated data is deleted.
 
 Triggered by:
+
 - Explicit uninstall command
 - Admin confirmation process
 - Optional CLI command
 
 Effects:
+
 - Drop plugin-owned tables OR
 - Delete plugin-owned rows
 - Remove plugin entry from `logacore_plugins`
 - Mark migration state as cleaned
 
 Requirements:
+
 - Explicit confirmation
 - Warning about irreversible action
 - Optional automatic backup
@@ -161,6 +174,7 @@ Default Rule:
 Removing a plugin does NOT delete its data.
 
 Rationale:
+
 - Prevent accidental data loss
 - Allow temporary deactivation
 - Support licensing tiers
@@ -182,11 +196,13 @@ If dependency is required:
   dependsOn: ["plugin-id"]
 
 Core behavior:
+
 - Prevent removal if dependent plugin exists
 - Warn before uninstall
 
 Recommended pattern:
 Cross-plugin communication should occur via:
+
 - Events
 - Hooks
 - Service layer contracts
@@ -202,6 +218,7 @@ Each plugin declares:
 - requiredCoreVersion
 
 On build:
+
 - Core validates compatibility
 - Migration runner checks schema state
 - Optional upgrade hooks may execute
@@ -225,14 +242,17 @@ This lifecycle model allows:
 # 8. Summary
 
 Removing plugin from build:
+
 - Removes UI and logic
 - Preserves database data
 
 Disabling plugin:
+
 - Keeps code included
 - Hides functionality
 
 Uninstalling plugin:
+
 - Deletes data explicitly
 - Requires confirmation
 
