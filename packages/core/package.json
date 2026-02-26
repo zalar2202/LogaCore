@@ -8,6 +8,7 @@
     "build:migrations": "tsc src/migrations/runner.ts --outDir dist/migrations --esModuleInterop --module CommonJS --target ES2020",
     "dev": "tsc -w",
     "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
