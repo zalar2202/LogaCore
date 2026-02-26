@@ -6,7 +6,9 @@
   "scripts": {
     "build": "tsc",
     "build:migrations": "tsc src/migrations/runner.ts --outDir dist/migrations --esModuleInterop --module CommonJS --target ES2020",
-    "dev": "tsc -w"
+    "dev": "tsc -w",
+    "lint": "eslint .",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "dotenv": "^17.3.1",
