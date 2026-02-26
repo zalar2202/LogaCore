@@ -93,8 +93,8 @@ For deeper context, read these in `docs/v.01/`:
 - [x] Architecture specs and decisions locked
 - [x] Core contracts (definePlugin, defineConfig, registry types, validation)
 - [x] Plugin loader + registry builder
-- [ ] Admin shell (layout, sidebar, route resolver)
-- [ ] RBAC (can, Require)
+- [x] Admin shell (layout, sidebar, route resolver)
+- [x] RBAC (can, Require)
 - [ ] tRPC integration
 - [ ] Auth wiring (NextAuth)
 - [ ] First plugin (hello-world)

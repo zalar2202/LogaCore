@@ -70,14 +70,14 @@ Registry builds deterministically from `logacore.config.ts`.
 
 # Day 4 – Admin Shell + RBAC Gate
 
-- [ ] Implement Admin shell components:
-  - [ ] `AdminLayout`, `Sidebar`, `Topbar`
-- [ ] Render sidebar from registry nav items
-- [ ] Implement route resolution:
-  - [ ] `/admin/[...slug]` resolves registry pages by `path`
-- [ ] Implement RBAC utilities:
-  - [ ] `can(user, perm)`
-  - [ ] `<Require perm>` for UI + route access blocking
+- [x] Implement Admin shell components:
+  - [x] `AdminLayout`, `Sidebar`, `Topbar`
+- [x] Render sidebar from registry nav items
+- [x] Implement route resolution:
+  - [x] `/admin/[...slug]` resolves registry pages by `path`
+- [x] Implement RBAC utilities:
+  - [x] `can(user, perm)`
+  - [x] `<Require perm>` for UI + route access blocking
 
 Deliverable:
 Admin loads, nav is dynamic, pages resolved via registry, permission gate exists.

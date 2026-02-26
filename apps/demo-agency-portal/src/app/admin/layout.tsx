@@ -1,0 +1,13 @@
+'use client';
+
+import type { ReactNode } from 'react';
+import { AdminShell } from '@/components/admin/AdminShell';
+import { registry } from '@/lib/registry';
+
+export default function AdminLayout({ children }: { children: ReactNode }) {
+  return (
+    <AdminShell registry={registry} user={null}>
+      {children}
+    </AdminShell>
+  );
+}

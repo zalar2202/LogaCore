@@ -11,6 +11,10 @@ export { loadPlugins } from './src/loader';
 // ─── Validation ────────────────────────────────────────────────
 export { validatePlugins, PluginValidationError } from './src/validation';
 
+// ─── RBAC ─────────────────────────────────────────────────────
+export { can, canAll } from './src/rbac';
+export { Require } from './src/rbac';
+
 // ─── Types ─────────────────────────────────────────────────────
 export type {
   PluginDefinition,
@@ -29,6 +33,8 @@ export type {
 } from './src/types/admin';
 
 export type { PermissionDefinition } from './src/types/permissions';
+
+export type { User } from './src/types/user';
 
 export type { LogaCoreConfig } from './src/types/config';
 
