@@ -1,0 +1,27 @@
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: logacore-db-local
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: logacore
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_local_data:/var/lib/postgresql/data
+  # Optional: LogaCore App in Docker
+  # app:
+  #   build: .
+  #   container_name: logacore-app-local
+  #   environment:
+  #     - DATABASE_URL=postgresql://postgres:password@db:5432/logacore?schema=public
+  #     - NEXTAUTH_SECRET=local-secret-only
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     - db
+
+volumes:
+  postgres_local_data:

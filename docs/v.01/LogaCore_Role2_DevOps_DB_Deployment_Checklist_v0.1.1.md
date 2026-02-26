@@ -55,12 +55,12 @@ Fresh install → `pnpm dev` works (even if auth providers are mocked).
 
 # Day 3 – PostgreSQL Local Dev Environment
 
-- [ ] Provide local Postgres via Docker Compose (recommended)
-- [ ] Document:
-  - [ ] how to start DB
-  - [ ] how to reset DB
-  - [ ] connection string format
-- [ ] Add basic DB health check utility
+- [x] Provide local Postgres via Docker Compose (recommended)
+- [x] Document:
+  - [x] how to start DB
+  - [x] how to reset DB
+  - [x] connection string format
+- [x] Add basic DB health check utility
 
 Deliverable:
 Team can spin up Postgres locally in minutes.
@@ -69,15 +69,15 @@ Team can spin up Postgres locally in minutes.
 
 # Day 4 – Core Migration Runner (Plugin SQL Migrations)
 
-- [ ] Implement migration tracking table:
-  - [ ] `logacore_migrations` (plugin_id, filename, applied_at, checksum optional)
-- [ ] Implement plugin migration discovery rules:
-  - [ ] default `./migrations`
-  - [ ] ordered execution (numeric prefix)
-- [ ] Ensure idempotency:
-  - [ ] never re-run applied migrations
-  - [ ] clear, actionable failure output
-- [ ] NOTE: Rollbacks are optional in v0.1 (no auto-down migrations)
+- [x] Implement migration tracking table:
+  - [x] `logacore_migrations` (plugin_id, filename, applied_at, checksum optional)
+- [x] Implement plugin migration discovery rules:
+  - [x] default `./migrations`
+  - [x] ordered execution (numeric prefix)
+- [x] Ensure idempotency:
+  - [x] never re-run applied migrations
+  - [x] clear, actionable failure output
+- [x] NOTE: Rollbacks are optional in v0.1 (no auto-down migrations)
 
 Deliverable:
 `pnpm db:migrate` applies plugin migrations deterministically.
@@ -86,13 +86,13 @@ Deliverable:
 
 # Day 5 – Drizzle DB Layer Baseline
 
-- [ ] Establish core DB module in `packages/db`:
-  - [ ] Drizzle client initialization using `DATABASE_URL`
-  - [ ] Standard query helpers (optional)
-- [ ] Decide and document:
-  - [ ] how plugins import DB client (from core/db package)
-  - [ ] where plugin table definitions live (e.g., `plugins/<id>/src/db/*`)
-- [ ] Ensure no plugin bypasses the shared connection pool
+- [x] Establish core DB module in `packages/db`:
+  - [x] Drizzle client initialization using `DATABASE_URL`
+  - [x] Standard query helpers (optional)
+- [x] Decide and document:
+  - [x] how plugins import DB client (from core/db package)
+  - [x] where plugin table definitions live (e.g., `plugins/<id>/src/db/*`)
+- [x] Ensure no plugin bypasses the shared connection pool
 
 Deliverable:
 Drizzle setup is consistent and reusable across plugins.
@@ -101,13 +101,13 @@ Drizzle setup is consistent and reusable across plugins.
 
 # Day 6 – CI + Reproducible Dev Setup
 
-- [ ] Add GitHub Actions (minimal):
-  - [ ] install
-  - [ ] lint
-  - [ ] typecheck
-  - [ ] build
-- [ ] Optional: run migrations in CI (only if DB service is configured)
-- [ ] Provide `docker-compose.yml` for local dev (DB + optional app)
+- [x] Add GitHub Actions (minimal):
+  - [x] install
+  - [x] lint
+  - [x] typecheck
+  - [x] build
+- [x] Optional: run migrations in CI (only if DB service is configured)
+- [x] Provide `docker-compose.yml` for local dev (DB + optional app)
 
 Deliverable:
 CI catches breakages early; dev setup is standardized.
@@ -116,12 +116,12 @@ CI catches breakages early; dev setup is standardized.
 
 # Day 7 – Staging Deployment Baseline
 
-- [ ] Deploy demo app to staging (Coolify/other)
-- [ ] Ensure DB migrations can run in staging workflow:
-  - [ ] manual step or pipeline step
-- [ ] Verify env vars in staging
-- [ ] Add health endpoint/check (simple)
-- [ ] Document the deployment steps in docs
+- [x] Deploy demo app to staging (Coolify/other)
+- [x] Ensure DB migrations can run in staging workflow:
+  - [x] manual step or pipeline step
+- [x] Verify env vars in staging
+- [x] Add health endpoint/check (simple)
+- [x] Document the deployment steps in docs
 
 Deliverable:
 Working staging instance + documented deployment procedure.

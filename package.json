@@ -11,7 +11,12 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "type-check": "tsc --noEmit",
-    "deploy": "pnpm -r build"
+    "deploy": "pnpm -r build",
+    "db:dev:up": "docker compose -f docker-compose.dev.yml up -d",
+    "db:dev:down": "docker compose -f docker-compose.dev.yml stop",
+    "db:dev:reset": "docker compose -f docker-compose.dev.yml down -v",
+    "db:check": "node scripts/check-db.js",
+    "db:migrate": "tsx packages/core/src/migrations/runner.ts"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
@@ -23,6 +28,7 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1",
     "prettier": "^3.8.1",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.56.1"
   }
