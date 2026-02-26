@@ -2,26 +2,43 @@ import { Client } from 'pg';
 import * as fs from 'fs';
 import * as path from 'path';
 import { glob } from 'glob';
-import * as dotenv from 'dotenv';
-
-dotenv.config({ path: path.resolve(process.cwd(), '.env') });
 
 const DATABASE_URL = process.env.DATABASE_URL;
 
-if (!DATABASE_URL) {
-    console.error('❌ DATABASE_URL is not defined in .env');
-    process.exit(1);
-}
-
 async function runMigrations() {
+    if (!DATABASE_URL) {
+        console.error('❌ DATABASE_URL is not defined in environment variables.');
+        process.exit(1);
+    }
+
+    console.log('🔄 Starting migration runner...');
+    console.log(`📂 Current working directory: ${process.cwd()}`);
+
     const client = new Client({
         connectionString: DATABASE_URL,
+        connectionTimeoutMillis: 5000,
     });
 
-    try {
-        await client.connect();
-        console.log('✅ Connected to database for migrations.');
+    let connected = false;
+    let retries = 5;
 
+    while (!connected && retries > 0) {
+        try {
+            await client.connect();
+            connected = true;
+            console.log('✅ Connected to database for migrations.');
+        } catch (err: any) {
+            retries--;
+            console.warn(`⚠️ Database connection failed (${err.message}). Retrying in 5 seconds... (${retries} retries left)`);
+            if (retries === 0) {
+                console.error('❌ Could not connect to database after multiple attempts.');
+                process.exit(1);
+            }
+            await new Promise((resolve) => setTimeout(resolve, 5000));
+        }
+    }
+
+    try {
         // 1. Ensure logacore_migrations table exists
         await client.query(`
       CREATE TABLE IF NOT EXISTS logacore_migrations (
@@ -35,8 +52,8 @@ async function runMigrations() {
 
         // 2. Discover migrations in plugins/*
         const pluginsPath = path.resolve(process.cwd(), 'plugins');
+        console.log(`🔍 Searching for migrations in: ${pluginsPath}`);
 
-        // Check if plugins directory exists
         if (!fs.existsSync(pluginsPath)) {
             console.log('ℹ️ No plugins directory found. Skipping migrations.');
             return;
@@ -54,7 +71,9 @@ async function runMigrations() {
 
         for (const filePath of migrationFiles) {
             const filename = path.basename(filePath);
-            const pluginId = path.basename(path.dirname(path.dirname(filePath)));
+            const parts = filePath.split(path.sep);
+            // Assuming structure: .../plugins/<pluginId>/migrations/<filename>
+            const pluginId = parts[parts.length - 3];
 
             // 3. Check if already applied
             const res = await client.query(
@@ -68,7 +87,6 @@ async function runMigrations() {
             }
 
             console.log(`🚀 Applying ${pluginId}/${filename}...`);
-
             const sql = fs.readFileSync(filePath, 'utf-8');
 
             try {
