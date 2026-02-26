@@ -11,6 +11,7 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 # Copy workspace packages/apps to install their specific deps
 COPY apps/demo-agency-portal/package.json ./apps/demo-agency-portal/
 COPY packages/core/package.json ./packages/core/
+COPY packages/db/package.json ./packages/db/
 
 RUN pnpm install --frozen-lockfile
 
@@ -19,6 +20,8 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=deps /app/apps/demo-agency-portal/node_modules ./apps/demo-agency-portal/node_modules
+COPY --from=deps /app/packages/core/node_modules ./packages/core/node_modules
+COPY --from=deps /app/packages/db/node_modules ./packages/db/node_modules
 COPY . .
 
 # Install pnpm in builder
