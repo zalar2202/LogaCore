@@ -6,15 +6,12 @@
     "dev": "next dev --port 5555",
     "build": "next build",
     "start": "next start --port 5555",
-    "lint": "next lint",
-    "lint:fix": "next lint --fix",
-    "type-check": "tsc --noEmit"
+    "lint": "next lint"
   },
   "dependencies": {
     "@logacore/core": "workspace:*",
-    "glob": "^13.0.6",
+    "@logacore/plugin-hello-world": "workspace:*",
     "next": "16.1.6",
-    "pg": "^8.19.0",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },

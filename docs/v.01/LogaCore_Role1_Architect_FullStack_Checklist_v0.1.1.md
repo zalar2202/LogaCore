@@ -86,12 +86,12 @@ Admin loads, nav is dynamic, pages resolved via registry, permission gate exists
 
 # Day 5 – Hello Plugin (Proof of Integration)
 
-- [ ] Create `plugins/hello-world` following Plugin Interface Spec
-- [ ] Register:
-  - [ ] one nav item
-  - [ ] one admin page
-  - [ ] one permission key (`hello.read`)
-- [ ] Confirm removing the plugin from config removes UI/routes in next build
+- [x] Create `plugins/hello-world` following Plugin Interface Spec
+- [x] Register:
+  - [x] one nav item
+  - [x] one admin page
+  - [x] one permission key (`hello.read`)
+- [x] Confirm removing the plugin from config removes UI/routes in next build
 
 Deliverable:
 Plugin injection proven end-to-end.
