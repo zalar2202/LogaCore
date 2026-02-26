@@ -11,6 +11,7 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 # Copy workspace packages/apps to install their specific deps
 COPY apps/demo-agency-portal/package.json ./apps/demo-agency-portal/
 COPY packages/core/package.json ./packages/core/
+COPY packages/db/package.json ./packages/db/
 
 RUN pnpm install --frozen-lockfile
 
@@ -19,6 +20,8 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=deps /app/apps/demo-agency-portal/node_modules ./apps/demo-agency-portal/node_modules
+COPY --from=deps /app/packages/core/node_modules ./packages/core/node_modules
+COPY --from=deps /app/packages/db/node_modules ./packages/db/node_modules
 COPY . .
 
 # Install pnpm in builder
@@ -40,11 +43,18 @@ ENV NEXT_TELEMETRY_DISABLED 1
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# The standalone output includes the full project structure.
 # COPY the standalone folder and then the static assets into their proper locations.
 COPY --from=builder /app/apps/demo-agency-portal/public ./apps/demo-agency-portal/public
 COPY --from=builder --chown=nextjs:nodejs /app/apps/demo-agency-portal/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/apps/demo-agency-portal/.next/static ./apps/demo-agency-portal/.next/static
+
+# Copy plugins for migrations (SQL files) 
+COPY --from=builder --chown=nextjs:nodejs /app/plugins ./plugins
+# Copy the compiled migration runner
+COPY --from=builder --chown=nextjs:nodejs /app/packages/core/dist ./packages/core/dist
+# Copy the startup script
+COPY --from=builder --chown=nextjs:nodejs /app/scripts/docker-start.sh ./scripts/docker-start.sh
+RUN chmod +x ./scripts/docker-start.sh
 
 USER nextjs
 
@@ -52,5 +62,5 @@ EXPOSE 3000
 ENV PORT 3000
 ENV HOSTNAME "0.0.0.0"
 
-# In a monorepo, the server.js is nested at the app path
-CMD ["node", "apps/demo-agency-portal/server.js"]
+# Use the startup script
+CMD ["sh", "./scripts/docker-start.sh"]
