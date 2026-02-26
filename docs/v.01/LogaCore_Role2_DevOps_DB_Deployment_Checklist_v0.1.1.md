@@ -21,16 +21,16 @@ Related reference docs:
 
 # Day 1 – Monorepo Setup (pnpm Workspaces)
 
-- [ ] Initialize pnpm workspace + workspace globs:
-  - [ ] apps/\*
-  - [ ] packages/\*
-  - [ ] plugins/\*
-- [ ] Configure root scripts:
-  - [ ] `dev`, `build`, `lint`, `typecheck`
-- [ ] Setup shared configs:
-  - [ ] `tsconfig.base.json`
-  - [ ] ESLint + Prettier
-- [ ] Verify workspace linking works (`workspace:*` deps resolve)
+- [x] Initialize pnpm workspace + workspace globs:
+  - [x] apps/*
+  - [x] packages/*
+  - [x] plugins/*
+- [x] Configure root scripts:
+  - [x] `dev`, `build`, `lint`, `typecheck`
+- [x] Setup shared configs:
+  - [x] `tsconfig.base.json`
+  - [x] ESLint + Prettier
+- [x] Verify workspace linking works (`workspace:*` deps resolve)
 
 Deliverable:
 Monorepo installs and runs consistently on clean machine.
@@ -39,14 +39,14 @@ Monorepo installs and runs consistently on clean machine.
 
 # Day 2 – Demo App Bootstrapping + Env Discipline
 
-- [ ] Create Next.js demo app under `apps/demo-agency-portal`
-- [ ] Provide `.env.example` and env validation (Zod recommended)
-- [ ] Define required env vars (minimum):
-  - [ ] `DATABASE_URL`
-  - [ ] NextAuth/Auth.js secrets/providers (placeholders)
-- [ ] Add scripts per app:
-  - [ ] `dev`, `build`, `start`
-  - [ ] `db:migrate`
+- [x] Create Next.js demo app under `apps/demo-agency-portal`
+- [x] Provide `.env.example` and env validation (Zod recommended)
+- [x] Define required env vars (minimum):
+  - [x] `DATABASE_URL`
+  - [x] NextAuth/Auth.js secrets/providers (placeholders)
+- [x] Add scripts per app:
+  - [x] `dev`, `build`, `start`
+  - [x] `db:migrate`
 
 Deliverable:
 Fresh install → `pnpm dev` works (even if auth providers are mocked).
