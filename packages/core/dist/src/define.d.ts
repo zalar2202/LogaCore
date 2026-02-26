@@ -1,4 +1,4 @@
-import { LogaPlugin, LogaCoreConfig } from "./types";
+import { LogaPlugin, LogaCoreConfig } from './types';
 /**
  * Utility to define a plugin with type-safety and standard metadata.
  * Use this in every /plugins/* package.
