@@ -12,7 +12,7 @@ export default function SignInPage() {
           </p>
         </div>
 
-        <Suspense>
+        <Suspense fallback={<div className="h-[240px] w-full animate-pulse rounded-lg bg-slate-800/50" />}>
           <SignInForm />
         </Suspense>
       </div>

@@ -24,8 +24,9 @@ export function Topbar() {
               {user.name ?? user.email ?? user.id}
             </span>
             <button
+              id="sign-out-button"
               onClick={() => signOut({ callbackUrl: '/auth/signin' })}
-              className="rounded-md border border-slate-600 px-3 py-1 text-xs font-medium text-slate-400 transition-colors hover:border-slate-500 hover:text-slate-200"
+              className="rounded-md bg-slate-800 px-3 py-1.5 text-xs font-medium text-slate-300 border border-slate-700 transition-colors hover:bg-slate-700 hover:text-white"
             >
               Sign Out
             </button>
