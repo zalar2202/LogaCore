@@ -11,6 +11,11 @@ export { loadPlugins } from './src/loader';
 // ─── Validation ────────────────────────────────────────────────
 export { validatePlugins, PluginValidationError } from './src/validation';
 
+// ─── tRPC ─────────────────────────────────────────────────────
+// Server-only: import from '@logacore/core/trpc' instead.
+// Kept out of this barrel to avoid pulling @trpc/server into
+// client bundles.
+
 // ─── RBAC ─────────────────────────────────────────────────────
 export { can, canAll } from './src/rbac';
 export { Require } from './src/rbac';

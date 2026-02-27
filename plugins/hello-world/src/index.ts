@@ -1,6 +1,9 @@
 import { definePlugin } from '@logacore/core';
 import { HelloPage } from './pages/HelloPage';
 
+// Router is server-only — import from '@logacore/plugin-hello-world/api'
+// instead to avoid pulling @trpc/server into client bundles.
+
 export const plugin = definePlugin({
   id: 'hello-world',
   name: 'Hello World',

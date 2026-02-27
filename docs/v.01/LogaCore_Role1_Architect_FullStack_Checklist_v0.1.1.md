@@ -100,15 +100,19 @@ Plugin injection proven end-to-end.
 
 # Day 6 – tRPC Integration (Internal API Standard)
 
-- [ ] Define the core tRPC composition pattern:
-  - [ ] `createContext()` includes session/user
-  - [ ] `protectedProcedure` enforces auth
-  - [ ] `requirePerm()` helper enforces RBAC in procedures
-- [ ] Implement router merge strategy:
-  - [ ] Core merges plugin routers under namespaced keys
-- [ ] Add one example procedure in hello-world:
-  - [ ] input validated via Zod
-  - [ ] permission enforced
+- [x] Define the core tRPC composition pattern:
+  - [x] `createContext()` includes session/user
+  - [x] `protectedProcedure` enforces auth
+  - [x] `requirePerm()` helper enforces RBAC in procedures
+- [x] Implement router merge strategy:
+  - [x] Core merges plugin routers under namespaced keys
+- [x] Add one example procedure in hello-world:
+  - [x] input validated via Zod
+  - [x] permission enforced
+- [x] App-level wiring:
+  - [x] tRPC API route handler (`/api/trpc/[trpc]`)
+  - [x] React Query client + TRPCProvider
+  - [x] HelloTRPCDemo component on admin dashboard
 
 Deliverable:
 Plugin provides tRPC procedures + UI can call them type-safely.
