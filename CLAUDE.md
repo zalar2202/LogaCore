@@ -78,6 +78,13 @@ Scope examples: core, plugin-cms, deploy, admin
 - Do NOT build marketplace, multi-tenant, or SaaS features.
 - Do NOT hardcode feature pages in core.
 
+## Skills Reference
+
+A library of implementation skills/guides is available at `~/.claude/skills/` (~940 topics).
+During planning and implementation, **proactively search** this directory for relevant skills
+(e.g., `nextjs-app-router-patterns`, `auth-js`, `trpc`, `drizzle-orm`, `tailwindcss`, etc.)
+and consult them before writing code. This helps catch best practices and avoid pitfalls.
+
 ## Key Spec Documents
 
 For deeper context, read these in `docs/v.01/`:
@@ -95,6 +102,6 @@ For deeper context, read these in `docs/v.01/`:
 - [x] Plugin loader + registry builder
 - [x] Admin shell (layout, sidebar, route resolver)
 - [x] RBAC (can, Require)
-- [ ] tRPC integration
-- [ ] Auth wiring (NextAuth)
+- [x] tRPC integration
+- [x] Auth wiring (NextAuth)
 - [x] First plugin (hello-world)

@@ -1,6 +1,7 @@
 'use client';
 
 import { useAdmin } from '@/components/admin/AdminContext';
+import { HelloTRPCDemo } from '@/components/admin/HelloTRPCDemo';
 
 export default function AdminDashboard() {
   const registry = useAdmin();
@@ -57,6 +58,9 @@ export default function AdminDashboard() {
           </p>
         </div>
       )}
+
+      {/* tRPC demo */}
+      <HelloTRPCDemo />
 
       {/* Dashboard widgets */}
       {registry.widgets.length > 0 && (

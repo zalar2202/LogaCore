@@ -100,15 +100,19 @@ Plugin injection proven end-to-end.
 
 # Day 6 – tRPC Integration (Internal API Standard)
 
-- [ ] Define the core tRPC composition pattern:
-  - [ ] `createContext()` includes session/user
-  - [ ] `protectedProcedure` enforces auth
-  - [ ] `requirePerm()` helper enforces RBAC in procedures
-- [ ] Implement router merge strategy:
-  - [ ] Core merges plugin routers under namespaced keys
-- [ ] Add one example procedure in hello-world:
-  - [ ] input validated via Zod
-  - [ ] permission enforced
+- [x] Define the core tRPC composition pattern:
+  - [x] `createContext()` includes session/user
+  - [x] `protectedProcedure` enforces auth
+  - [x] `requirePerm()` helper enforces RBAC in procedures
+- [x] Implement router merge strategy:
+  - [x] Core merges plugin routers under namespaced keys
+- [x] Add one example procedure in hello-world:
+  - [x] input validated via Zod
+  - [x] permission enforced
+- [x] App-level wiring:
+  - [x] tRPC API route handler (`/api/trpc/[trpc]`)
+  - [x] React Query client + TRPCProvider
+  - [x] HelloTRPCDemo component on admin dashboard
 
 Deliverable:
 Plugin provides tRPC procedures + UI can call them type-safely.
@@ -117,13 +121,21 @@ Plugin provides tRPC procedures + UI can call them type-safely.
 
 # Day 7 – Auth Wiring + Docs Hardening
 
-- [ ] Integrate NextAuth/Auth.js:
-  - [ ] protect `/admin` routes
-  - [ ] expose session/user in tRPC context
-- [ ] Create/Update docs:
-  - [ ] plugin authoring guide references Plugin Interface Spec
-  - [ ] “Included vs Enabled vs Removed” behavior aligns with Lifecycle Policy
-- [ ] Refactor any shortcuts and remove hardcoded paths
+- [x] Integrate NextAuth/Auth.js:
+  - [x] Core auth wrapper (`@logacore/core/auth`) with `createAuth()`, `toLogaCoreUser()`
+  - [x] Auth DB schema (users, accounts, verificationTokens) via `@logacore/db`
+  - [x] Credentials provider + optional Google OAuth
+  - [x] JWT session strategy with permissions in token
+  - [x] Protect `/admin` routes (server component redirect)
+  - [x] Expose session/user in tRPC context
+  - [x] `enforceAuth` middleware rejects unauthenticated requests
+  - [x] Sign-in page (`/auth/signin`) with dark theme
+  - [x] Sign-out button in Topbar
+- [x] Create/Update docs:
+  - [x] Plugin Authoring Guide references Plugin Interface Spec
+- [x] Refactor any shortcuts and remove hardcoded paths:
+  - [x] Admin layout converted from client to server component
+  - [x] tRPC context injects real user + db (no more `null` stubs)
 
 Deliverable:
 Clean v0.1 foundation with stable contracts and working auth.

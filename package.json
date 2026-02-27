@@ -18,6 +18,9 @@
     "db:check": "node scripts/check-db.js",
     "db:migrate": "tsx packages/core/src/migrations/runner.ts"
   },
+  "pnpm": {
+    "onlyBuiltDependencies": ["bcrypt", "esbuild", "sharp", "unrs-resolver"]
+  },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@typescript-eslint/eslint-plugin": "^8.56.1",
