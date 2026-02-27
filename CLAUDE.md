@@ -103,5 +103,5 @@ For deeper context, read these in `docs/v.01/`:
 - [x] Admin shell (layout, sidebar, route resolver)
 - [x] RBAC (can, Require)
 - [x] tRPC integration
-- [ ] Auth wiring (NextAuth)
+- [x] Auth wiring (NextAuth)
 - [x] First plugin (hello-world)

@@ -1,6 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
+import { signOut } from 'next-auth/react';
 import { useAdmin, useUser } from './AdminContext';
 
 export function Topbar() {
@@ -18,9 +19,17 @@ export function Topbar() {
 
       <div className="flex items-center gap-3">
         {user ? (
-          <span className="text-sm text-slate-400">
-            {user.name ?? user.email ?? user.id}
-          </span>
+          <>
+            <span className="text-sm text-slate-400">
+              {user.name ?? user.email ?? user.id}
+            </span>
+            <button
+              onClick={() => signOut({ callbackUrl: '/auth/signin' })}
+              className="rounded-md border border-slate-600 px-3 py-1 text-xs font-medium text-slate-400 transition-colors hover:border-slate-500 hover:text-slate-200"
+            >
+              Sign Out
+            </button>
+          </>
         ) : (
           <span className="rounded-full bg-amber-500/20 px-3 py-1 text-xs font-medium text-amber-400 border border-amber-500/30">
             Dev Mode

@@ -5,24 +5,28 @@ import { can } from '../rbac/can';
 /**
  * Middleware that enforces the user is authenticated.
  *
- * Before auth is wired (Day 7), user is null and we allow
- * access (dev mode). This matches the RBAC `can()` behavior
- * where null user = full access.
- *
- * Once auth is wired, null user = truly unauthenticated,
- * and this middleware will be tightened to throw UNAUTHORIZED.
+ * Rejects unauthenticated requests (user === null) with
+ * an UNAUTHORIZED error. All protected procedures should
+ * use this middleware.
  */
 export const enforceAuth = middleware(async (opts) => {
+  if (!opts.ctx.user) {
+    throw new TRPCError({
+      code: 'UNAUTHORIZED',
+      message: 'You must be signed in to access this resource.',
+    });
+  }
+
   return opts.next({
-    ctx: opts.ctx,
+    ctx: { ...opts.ctx, user: opts.ctx.user },
   });
 });
 
 /**
  * Creates a middleware that enforces a specific permission.
  *
- * Uses the existing `can()` function from RBAC, which returns
- * true for null users (dev mode).
+ * Should be chained after `enforceAuth` so the user is
+ * guaranteed to be non-null.
  *
  * @param perm - Permission key to enforce (e.g., 'hello.read')
  */

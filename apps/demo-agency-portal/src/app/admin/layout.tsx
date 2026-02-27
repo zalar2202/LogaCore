@@ -1,16 +1,21 @@
-'use client';
+import { redirect } from 'next/navigation';
+import { auth } from '@/lib/auth';
+import { toLogaCoreUser } from '@logacore/core/auth';
+import type { SessionUser } from '@logacore/core/auth';
+import { AdminClientLayout } from '@/components/admin/AdminClientLayout';
 
-import type { ReactNode } from 'react';
-import { AdminShell } from '@/components/admin/AdminShell';
-import { TRPCProvider } from '@/lib/trpc/client';
-import { registry } from '@/lib/registry';
+export default async function AdminLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const session = await auth();
 
-export default function AdminLayout({ children }: { children: ReactNode }) {
-  return (
-    <TRPCProvider>
-      <AdminShell registry={registry} user={null}>
-        {children}
-      </AdminShell>
-    </TRPCProvider>
-  );
+  if (!session?.user) {
+    redirect('/auth/signin');
+  }
+
+  const user = toLogaCoreUser(session.user as SessionUser);
+
+  return <AdminClientLayout user={user}>{children}</AdminClientLayout>;
 }

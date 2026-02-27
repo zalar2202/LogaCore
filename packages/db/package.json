@@ -5,6 +5,7 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "tsc",
+    "seed": "tsx src/seed.ts",
     "dev": "tsc -w",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -15,12 +16,15 @@
   "license": "ISC",
   "packageManager": "pnpm@10.30.3",
   "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
     "@types/dotenv": "^8.2.3",
     "@types/node": "^20.19.34",
     "drizzle-kit": "^0.31.9",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3"
   },
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "dotenv": "^17.3.1",
     "drizzle-orm": "^0.45.1",
     "postgres": "^3.4.8"
