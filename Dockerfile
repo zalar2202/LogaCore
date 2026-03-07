@@ -52,8 +52,9 @@ COPY --from=builder --chown=nextjs:nodejs /app/apps/demo-agency-portal/.next/sta
 
 # Copy plugins for migrations (SQL files) 
 COPY --from=builder --chown=nextjs:nodejs /app/plugins ./plugins
-# Copy the compiled migration runner
+# Copy the compiled migration runner and its dependencies (pg, glob)
 COPY --from=builder --chown=nextjs:nodejs /app/packages/core/dist ./packages/core/dist
+COPY --from=builder --chown=nextjs:nodejs /app/packages/core/node_modules ./packages/core/node_modules
 # Copy the startup script
 COPY --from=builder --chown=nextjs:nodejs /app/scripts/docker-start.sh ./scripts/docker-start.sh
 RUN chmod +x ./scripts/docker-start.sh
