@@ -1,5 +1,5 @@
 import { db, schema } from './index';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import { eq } from 'drizzle-orm';
 
 const ADMIN_EMAIL = 'admin@logacore.dev';
