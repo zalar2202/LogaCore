@@ -15,7 +15,7 @@ export function createAuth(config: LogaCoreAuthConfig) {
       usersTable: config.schema.users,
       accountsTable: config.schema.accounts,
       verificationTokensTable: config.schema.verificationTokens,
-    }),
+    }) as any,
     session: {
       strategy: 'jwt',
     },

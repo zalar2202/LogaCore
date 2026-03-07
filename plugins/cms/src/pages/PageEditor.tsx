@@ -216,15 +216,15 @@ export function PageEditor() {
                 <div className="rounded-xl border border-slate-700 bg-slate-900 p-6 sticky top-24">
                     <h3 className="text-lg font-bold text-white mb-4">Available Blocks</h3>
                     <div className="space-y-2 overflow-y-auto max-h-[60vh]">
-                        {allBlocksQuery.data?.filter(b => b.status !== 'archived').map((block: any) => {
+                        {allBlocksQuery.data?.filter((b: any) => b.status !== 'archived').map((block: any) => {
                             const isOnPage = pageBlocks.find(pb => pb.id === block.id);
                             return (
                                 <div
                                     key={block.id}
                                     onClick={() => !isNew && addBlock(block)}
                                     className={`p-3 rounded-lg border text-left transition-all ${isNew ? 'opacity-50 cursor-not-allowed' :
-                                            isOnPage ? 'border-violet-500/50 bg-violet-500/5 cursor-default' :
-                                                'border-slate-800 bg-slate-800/50 hover:border-slate-600 cursor-pointer'
+                                        isOnPage ? 'border-violet-500/50 bg-violet-500/5 cursor-default' :
+                                            'border-slate-800 bg-slate-800/50 hover:border-slate-600 cursor-pointer'
                                         }`}
                                 >
                                     <div className="flex justify-between items-start">
