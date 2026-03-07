@@ -16,6 +16,7 @@
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "Bundler",
     "isolatedModules": true,
+    "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
       "@logacore/core": [
