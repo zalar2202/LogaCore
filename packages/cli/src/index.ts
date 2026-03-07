@@ -16,7 +16,7 @@ const cli = cac('logacore');
 
 cli
     .command('plugin:create [name]', 'Create a new LogaCore plugin')
-    .action(async (name) => {
+    .action(async (name: string | undefined) => {
         try {
             const response: any = await enquirer.prompt([
                 {
@@ -24,7 +24,7 @@ cli
                     name: 'id',
                     message: 'Plugin ID (e.g. blog, commerce):',
                     initial: name?.toLowerCase().replace(/ /g, '-'),
-                    validate: (val) => /^[a-z0-9-]+$/.test(val) || 'ID must be alphanumeric and hyphenated'
+                    validate: (val: string) => /^[a-z0-9-]+$/.test(val) || 'ID must be alphanumeric and hyphenated'
                 },
                 {
                     type: 'input',
