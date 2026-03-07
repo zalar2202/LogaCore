@@ -1,4 +1,5 @@
 import { definePlugin } from '@logacore/core';
+import { CmsDashboard } from './pages/CmsDashboard';
 
 /**
  * LogaCore CMS Plugin
@@ -43,7 +44,7 @@ export const plugin = definePlugin({
             {
                 id: 'cms-dashboard',
                 path: '/admin/cms',
-                component: () => null, // Placeholder - will replace with real component
+                component: CmsDashboard,
                 requiredPerms: ['cms.read'],
                 title: 'CMS Dashboard',
             },
