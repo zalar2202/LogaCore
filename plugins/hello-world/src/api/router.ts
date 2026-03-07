@@ -15,7 +15,7 @@ import {
  */
 export const helloWorldRouter = createTRPCRouter({
   greet: protectedProcedure
-    .use(requirePerm('hello.read'))
+    .use(requirePerm('hello-world.read'))
     .input(
       z.object({
         name: z.string().min(1).max(100),

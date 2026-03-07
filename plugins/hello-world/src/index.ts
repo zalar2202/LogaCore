@@ -13,7 +13,7 @@ export const plugin = definePlugin({
 
   permissions: [
     {
-      key: 'hello.read',
+      key: 'hello-world.read',
       name: 'Read Hello',
       description: 'View the Hello World page',
     },
@@ -25,7 +25,7 @@ export const plugin = definePlugin({
         id: 'hello',
         label: 'Hello World',
         href: '/admin/hello-world',
-        requiredPerms: ['hello.read'],
+        requiredPerms: ['hello-world.read'],
       },
     ],
     pages: [
@@ -33,7 +33,7 @@ export const plugin = definePlugin({
         id: 'hello-page',
         path: '/admin/hello-world',
         component: HelloPage,
-        requiredPerms: ['hello.read'],
+        requiredPerms: ['hello-world.read'],
         title: 'Hello World',
       },
     ],
