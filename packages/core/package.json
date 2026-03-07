@@ -6,7 +6,8 @@
     ".": "./index.ts",
     "./trpc": "./src/trpc/index.ts",
     "./auth": "./src/auth/index.ts",
-    "./server": "./server.ts"
+    "./server": "./server.ts",
+    "./admin": "./src/admin/AdminContext.tsx"
   },
   "scripts": {
     "build": "tsc",

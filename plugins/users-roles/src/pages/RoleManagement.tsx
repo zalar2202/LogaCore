@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { trpc, useAdmin } from '@logacore/core';
+import { trpc } from '@logacore/core';
+import { useAdmin } from '@logacore/core/admin';
 
 export function RoleManagement() {
     const utils = (trpc as any).useUtils();
