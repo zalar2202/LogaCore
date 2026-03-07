@@ -5,8 +5,8 @@ echo "📂 Working directory: $(pwd)"
 
 # 1. Run migrations
 echo "📡 Initializing database migrations..."
-# Use absolute path relative to /app
-node ./packages/core/dist/src/migrations/runner.js || {
+# Use the bundled runner which contains all dependencies (pg, glob)
+node ./packages/core/dist/migrations/runner.bundle.js || {
   echo "⚠️ Migrations reported an error, but we'll try to start the server anyway to allow log inspection."
 }
 
