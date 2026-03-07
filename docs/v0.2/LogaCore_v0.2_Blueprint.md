@@ -238,20 +238,17 @@ platform”.
 
 # 8. Milestone Roadmap
 
-## Milestone 1
-
--   Plugin validation enforcement  
--   Migration runner v1
+## Milestone 1 [PARTIAL]
+-   [ ] Plugin validation enforcement  
+-   [x] Migration runner v1 (Bundled & Standardized)
 
 ## Milestone 2
+-   [ ] RBAC v1 (Roles & Permissions Tables)
+-   [ ] Role management UI
 
--   RBAC v1  
--   Role management UI
-
-## Milestone 3
-
--   CMS Lite plugin  
--   Audit log plugin
+## Milestone 3 [IN PROGRESS]
+-   [x] CMS Lite plugin (CRUD + Permissions)
+-   [ ] Audit log plugin
 
 ## Milestone 4
 

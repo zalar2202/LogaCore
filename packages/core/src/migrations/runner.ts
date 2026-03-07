@@ -50,30 +50,53 @@ async function runMigrations() {
       );
     `);
 
-        // 2. Discover migrations in plugins/*
+        // 2. Discover migrations
         const pluginsPath = path.resolve(process.cwd(), 'plugins');
-        console.log(`🔍 Searching for migrations in: ${pluginsPath}`);
+        const coreMigrationsPath = path.resolve(process.cwd(), 'migrations', 'core');
 
-        if (!fs.existsSync(pluginsPath)) {
-            console.log('ℹ️ No plugins directory found. Skipping migrations.');
-            return;
+        console.log(`🔍 Searching for migrations in: ${pluginsPath} and ${coreMigrationsPath}`);
+
+        const migrationFiles: { filePath: string; pluginId: string; filename: string }[] = [];
+
+        // 2a. Core migrations
+        if (fs.existsSync(coreMigrationsPath)) {
+            const files = fs.readdirSync(coreMigrationsPath).filter(f => f.endsWith('.sql'));
+            for (const f of files) {
+                migrationFiles.push({
+                    filePath: path.join(coreMigrationsPath, f),
+                    pluginId: 'core',
+                    filename: f
+                });
+            }
         }
 
-        const migrationFiles = await glob('*/migrations/*.sql', {
-            cwd: pluginsPath,
-            absolute: true,
-        });
+        // 2b. Plugin migrations
+        if (fs.existsSync(pluginsPath)) {
+            const pluginMigrationFiles = await glob('*/migrations/*.sql', {
+                cwd: pluginsPath,
+                absolute: true,
+            });
 
-        // Sort by filename (numeric prefix)
-        migrationFiles.sort((a, b) => path.basename(a).localeCompare(path.basename(b)));
+            for (const filePath of pluginMigrationFiles) {
+                const filename = path.basename(filePath);
+                const parts = filePath.split(path.sep);
+                // Assuming structure: .../plugins/<pluginId>/migrations/<filename>
+                const pluginId = parts[parts.length - 3];
+                migrationFiles.push({ filePath, pluginId, filename });
+            }
+        }
+
+        // Sort: Core first, then alphabetical by filename (numeric prefix handles order)
+        migrationFiles.sort((a, b) => {
+            if (a.pluginId === 'core' && b.pluginId !== 'core') return -1;
+            if (a.pluginId !== 'core' && b.pluginId === 'core') return 1;
+            return a.filename.localeCompare(b.filename);
+        });
 
         console.log(`🔍 Found ${migrationFiles.length} migration(s).`);
 
-        for (const filePath of migrationFiles) {
-            const filename = path.basename(filePath);
-            const parts = filePath.split(path.sep);
-            // Assuming structure: .../plugins/<pluginId>/migrations/<filename>
-            const pluginId = parts[parts.length - 3];
+        for (const migration of migrationFiles) {
+            const { filePath, pluginId, filename } = migration;
 
             // 3. Check if already applied
             const res = await client.query(

@@ -2,19 +2,19 @@
 
 ## Core Tasks
 
--   Enforce plugin manifest schema
--   Implement validation rules
--   Harden migration runner
--   Implement RBAC enforcement layer
--   Implement CMS plugin
+- [ ] Enforce plugin manifest schema
+- [ ] Implement validation rules
+- [x] Harden migration runner (Bundled for production)
+- [ ] Implement RBAC enforcement layer
+- [x] Implement CMS plugin
 
 ## Plugin Tasks
 
--   Define CMS schema
--   Implement CRUD UI
--   Enforce permission guards
--   Integrate into admin shell
--   Add audit logging hooks
+- [x] Define CMS schema
+- [x] Implement CRUD UI
+- [x] Enforce permission guards
+- [x] Integrate into admin shell
+- [ ] Add audit logging hooks
 
 ## Stability Tasks
 
