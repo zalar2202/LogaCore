@@ -66,6 +66,9 @@ importers:
       '@logacore/db':
         specifier: workspace:*
         version: link:../../packages/db
+      '@logacore/plugin-cms':
+        specifier: workspace:*
+        version: link:../../plugins/cms
       '@logacore/plugin-hello-world':
         specifier: workspace:*
         version: link:../../plugins/hello-world
@@ -192,6 +195,21 @@ importers:
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
+
+  plugins/cms:
+    dependencies:
+      '@logacore/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@trpc/server':
+        specifier: ^11.10.0
+        version: 11.10.0(typescript@5.9.3)
+      react:
+        specifier: '>=19.0.0'
+        version: 19.2.4
+      zod:
+        specifier: ^4.3.6
+        version: 4.3.6
 
   plugins/hello-world:
     dependencies:
