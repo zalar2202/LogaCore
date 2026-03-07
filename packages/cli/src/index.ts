@@ -9,9 +9,6 @@ import { fileURLToPath } from 'url';
 import ora from 'ora';
 import Handlebars from 'handlebars';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 const cli = cac('logacore');
 
 cli
