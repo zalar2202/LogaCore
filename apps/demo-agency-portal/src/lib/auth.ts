@@ -2,7 +2,7 @@ import { createAuth } from '@logacore/core/auth';
 import Credentials from 'next-auth/providers/credentials';
 import Google from 'next-auth/providers/google';
 import { db, schema } from '@logacore/db';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 const providers: any[] = [
     Credentials({

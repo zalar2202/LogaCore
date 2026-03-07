@@ -28,7 +28,7 @@
     "react": ">=19.0.0"
   },
   "devDependencies": {
-    "@types/node": "^25.3.2",
+    "@types/node": "^20.19.34",
     "@types/pg": "^8.16.0",
     "@types/react": "^19"
   },
