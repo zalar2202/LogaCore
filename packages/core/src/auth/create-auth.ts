@@ -29,9 +29,15 @@ export function createAuth(config: LogaCoreAuthConfig) {
           token.id = user.id;
         }
 
-        // Fetch permissions if we have a user ID (on login OR explicit refresh)
-        // This ensures permissions are pulled from RBAC tables, not just the user JSON column
-        if (token.id) {
+        // Only resolve permissions on initial login or explicit session refresh.
+        // On every other request, use the cached permissions already in the JWT.
+        // This prevents hammering the database on every single page load.
+        const shouldResolvePerms =
+          user ||                    // Initial login
+          trigger === 'update' ||    // Explicit session refresh (e.g., role change)
+          !token.permissions;        // First time (no cached perms yet)
+
+        if (token.id && shouldResolvePerms) {
           token.permissions = await resolveUserPermissions(config.db, token.id as string);
         }
 
