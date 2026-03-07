@@ -2,7 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import { signOut } from 'next-auth/react';
-import { useAdmin, useUser } from './AdminContext';
+import { useAdmin, useUser } from '@logacore/core/admin';
 
 export function Topbar() {
   const registry = useAdmin();

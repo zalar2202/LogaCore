@@ -1,6 +1,6 @@
 'use client';
 
-import { useAdmin } from '@/components/admin/AdminContext';
+import { useAdmin } from '@logacore/core/admin';
 import { HelloTRPCDemo } from '@/components/admin/HelloTRPCDemo';
 
 export default function AdminDashboard() {

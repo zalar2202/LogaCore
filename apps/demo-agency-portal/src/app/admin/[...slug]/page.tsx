@@ -2,7 +2,7 @@
 
 import { useParams } from 'next/navigation';
 import { canAll } from '@logacore/core';
-import { useAdmin, useUser } from '@/components/admin/AdminContext';
+import { useAdmin, useUser } from '@logacore/core/admin';
 
 export default function AdminCatchAll() {
   const params = useParams<{ slug: string[] }>();
