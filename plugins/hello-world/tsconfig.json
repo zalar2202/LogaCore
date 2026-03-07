@@ -6,8 +6,6 @@
     "noEmit": true
   },
   "include": [
-    "src/**/*",
-    "../../packages/core/src/**/*",
-    "../../packages/db/src/**/*"
+    "src/**/*"
   ]
 }

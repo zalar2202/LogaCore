@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { trpc } from '@/lib/trpc/client';
+import { trpc } from '@logacore/core';
 
 export function CmsDashboard() {
     const utils = trpc.useUtils();
@@ -45,7 +45,7 @@ export function CmsDashboard() {
                 .toLowerCase()
                 .replace(/[^\w ]+/g, '')
                 .replace(/ +/g, '-');
-            setFormData(prev => ({ ...prev, slug: generatedSlug }));
+            setFormData((prev: any) => ({ ...prev, slug: generatedSlug }));
         }
     }, [formData.title, editingId]);
 
@@ -122,13 +122,13 @@ export function CmsDashboard() {
                 <div className="rounded-lg border border-slate-700 bg-slate-800/50 p-4">
                     <p className="text-sm font-medium text-slate-400">Published</p>
                     <p className="mt-2 text-3xl font-bold text-emerald-400">
-                        {posts.data?.filter(p => p.status === 'published').length ?? 0}
+                        {posts.data?.filter((p: any) => p.status === 'published').length ?? 0}
                     </p>
                 </div>
                 <div className="rounded-lg border border-slate-700 bg-slate-800/50 p-4">
                     <p className="text-sm font-medium text-slate-400">Drafts</p>
                     <p className="mt-2 text-3xl font-bold text-amber-400">
-                        {posts.data?.filter(p => p.status === 'draft').length ?? 0}
+                        {posts.data?.filter((p: any) => p.status === 'draft').length ?? 0}
                     </p>
                 </div>
             </div>
@@ -158,7 +158,7 @@ export function CmsDashboard() {
                                 </td>
                             </tr>
                         )}
-                        {posts.data?.map((post) => (
+                        {posts.data?.map((post: any) => (
                             <tr key={post.id} className="hover:bg-slate-800/30 transition-colors text-slate-300">
                                 <td className="px-4 py-3 font-medium text-slate-200">
                                     {post.title}

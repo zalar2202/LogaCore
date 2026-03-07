@@ -1,16 +1,15 @@
 'use client';
 
 import { useState } from 'react';
-import { trpc } from '@/lib/trpc/client';
-import { useAdmin } from '@/components/admin/AdminContext';
+import { trpc, useAdmin } from '@logacore/core';
 
 export function RoleManagement() {
-    const utils = trpc.useUtils();
+    const utils = (trpc as any).useUtils();
     const registry = useAdmin();
-    const roles = trpc['users-roles'].listRoles.useQuery();
+    const roles = (trpc as any)['users-roles'].listRoles.useQuery();
 
     // Mutation for role management
-    const createRole = trpc['users-roles'].createRole.useMutation({
+    const createRole = (trpc as any)['users-roles'].createRole.useMutation({
         onSuccess: () => {
             utils['users-roles'].listRoles.invalidate();
             setIsModalOpen(false);
@@ -18,7 +17,7 @@ export function RoleManagement() {
         }
     });
 
-    const updateRole = trpc['users-roles'].updateRole.useMutation({
+    const updateRole = (trpc as any)['users-roles'].updateRole.useMutation({
         onSuccess: () => {
             utils['users-roles'].listRoles.invalidate();
             setIsModalOpen(false);
@@ -26,7 +25,7 @@ export function RoleManagement() {
         }
     });
 
-    const deleteRole = trpc['users-roles'].deleteRole.useMutation({
+    const deleteRole = (trpc as any)['users-roles'].deleteRole.useMutation({
         onSuccess: () => {
             utils['users-roles'].listRoles.invalidate();
         }
@@ -59,10 +58,10 @@ export function RoleManagement() {
     };
 
     const togglePermission = (perm: string) => {
-        setFormData(prev => ({
+        setFormData((prev: any) => ({
             ...prev,
             permissions: prev.permissions.includes(perm)
-                ? prev.permissions.filter(p => p !== perm)
+                ? prev.permissions.filter((p: any) => p !== perm)
                 : [...prev.permissions, perm]
         }));
     };
@@ -105,7 +104,7 @@ export function RoleManagement() {
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-800">
-                        {roles.data?.map(role => (
+                        {roles.data?.map((role: any) => (
                             <tr key={role.id} className="hover:bg-slate-800/30 text-slate-300">
                                 <td className="px-4 py-3 font-mono text-violet-400">{role.id}</td>
                                 <td className="px-4 py-3 font-medium text-white">{role.name}</td>
@@ -183,8 +182,8 @@ export function RoleManagement() {
                                         <div
                                             key={perm.key}
                                             className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-colors ${formData.permissions.includes(perm.key)
-                                                    ? 'border-violet-500 bg-violet-500/10'
-                                                    : 'border-slate-700 bg-slate-800 hover:border-slate-600'
+                                                ? 'border-violet-500 bg-violet-500/10'
+                                                : 'border-slate-700 bg-slate-800 hover:border-slate-600'
                                                 }`}
                                             onClick={() => togglePermission(perm.key)}
                                         >

@@ -11,14 +11,14 @@ export const usersRolesRouter = createTRPCRouter({
 
     listRoles: protectedProcedure
         .use(requirePerm('roles.manage'))
-        .query(async ({ ctx }) => {
+        .query(async ({ ctx }: any) => {
             return await ctx.db.select().from(schema.roles);
         }),
 
     getRole: protectedProcedure
         .input(z.object({ id: z.string() }))
         .use(requirePerm('roles.manage'))
-        .query(async ({ ctx, input }) => {
+        .query(async ({ ctx, input }: any) => {
             const role = await ctx.db.select()
                 .from(schema.roles)
                 .where(eq(schema.roles.id, input.id))
@@ -46,7 +46,7 @@ export const usersRolesRouter = createTRPCRouter({
             permissions: z.array(z.string())
         }))
         .use(requirePerm('roles.manage'))
-        .mutation(async ({ ctx, input }) => {
+        .mutation(async ({ ctx, input }: any) => {
             return await ctx.db.transaction(async (tx: any) => {
                 await tx.insert(schema.roles).values({
                     id: input.id,
@@ -56,7 +56,7 @@ export const usersRolesRouter = createTRPCRouter({
 
                 if (input.permissions.length > 0) {
                     await tx.insert(schema.rolePermissions).values(
-                        input.permissions.map(p => ({
+                        input.permissions.map((p: any) => ({
                             roleId: input.id,
                             permission: p
                         }))
@@ -74,7 +74,7 @@ export const usersRolesRouter = createTRPCRouter({
             permissions: z.array(z.string())
         }))
         .use(requirePerm('roles.manage'))
-        .mutation(async ({ ctx, input }) => {
+        .mutation(async ({ ctx, input }: any) => {
             return await ctx.db.transaction(async (tx: any) => {
                 await tx.update(schema.roles)
                     .set({
@@ -90,7 +90,7 @@ export const usersRolesRouter = createTRPCRouter({
 
                 if (input.permissions.length > 0) {
                     await tx.insert(schema.rolePermissions).values(
-                        input.permissions.map(p => ({
+                        input.permissions.map((p: any) => ({
                             roleId: input.id,
                             permission: p
                         }))
@@ -103,7 +103,7 @@ export const usersRolesRouter = createTRPCRouter({
     deleteRole: protectedProcedure
         .input(z.object({ id: z.string() }))
         .use(requirePerm('roles.manage'))
-        .mutation(async ({ ctx, input }) => {
+        .mutation(async ({ ctx, input }: any) => {
             await ctx.db.delete(schema.roles).where(eq(schema.roles.id, input.id));
             return { success: true };
         }),
@@ -112,14 +112,14 @@ export const usersRolesRouter = createTRPCRouter({
 
     listUsers: protectedProcedure
         .use(requirePerm('users.manage'))
-        .query(async ({ ctx }) => {
+        .query(async ({ ctx }: any) => {
             return await ctx.db.select().from(schema.users);
         }),
 
     getUserRoles: protectedProcedure
         .input(z.object({ userId: z.string() }))
         .use(requirePerm('users.manage'))
-        .query(async ({ ctx, input }) => {
+        .query(async ({ ctx, input }: any) => {
             return await ctx.db.select()
                 .from(schema.userRoles)
                 .where(eq(schema.userRoles.userId, input.userId));
@@ -131,14 +131,14 @@ export const usersRolesRouter = createTRPCRouter({
             roleIds: z.array(z.string())
         }))
         .use(requirePerm('users.manage'))
-        .mutation(async ({ ctx, input }) => {
+        .mutation(async ({ ctx, input }: any) => {
             return await ctx.db.transaction(async (tx: any) => {
                 await tx.delete(schema.userRoles)
                     .where(eq(schema.userRoles.userId, input.userId));
 
                 if (input.roleIds.length > 0) {
                     await tx.insert(schema.userRoles).values(
-                        input.roleIds.map(rid => ({
+                        input.roleIds.map((rid: any) => ({
                             userId: input.userId,
                             roleId: rid
                         }))
