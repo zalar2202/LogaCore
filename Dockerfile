@@ -20,12 +20,8 @@ RUN pnpm install --frozen-lockfile
 # --- STAGE 2: Builder ---
 FROM node:20-alpine AS builder
 WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
-COPY --from=deps /app/apps/demo-agency-portal/node_modules ./apps/demo-agency-portal/node_modules
-COPY --from=deps /app/packages/core/node_modules ./packages/core/node_modules
-COPY --from=deps /app/packages/db/node_modules ./packages/db/node_modules
-COPY --from=deps /app/plugins/hello-world/node_modules ./plugins/hello-world/node_modules
-COPY --from=deps /app/plugins/cms/node_modules ./plugins/cms/node_modules
+# Copy everything from deps
+COPY --from=deps /app ./
 COPY . .
 
 # Install pnpm in builder
