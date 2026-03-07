@@ -201,9 +201,15 @@ importers:
       '@logacore/core':
         specifier: workspace:*
         version: link:../../packages/core
+      '@logacore/db':
+        specifier: workspace:*
+        version: link:../../packages/db
       '@trpc/server':
         specifier: ^11.10.0
         version: 11.10.0(typescript@5.9.3)
+      drizzle-orm:
+        specifier: ^0.45.1
+        version: 0.45.1(@types/pg@8.16.0)(pg@8.19.0)(postgres@3.4.8)
       react:
         specifier: '>=19.0.0'
         version: 19.2.4
