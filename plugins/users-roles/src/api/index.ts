@@ -11,7 +11,7 @@ export const usersRolesRouter = createTRPCRouter({
     // --- Roles ---
 
     listRoles: protectedProcedure
-        .use(requirePerm('roles.manage'))
+        .use(requirePerm('users-roles.roles.manage'))
         .query(async ({ ctx }: any) => {
             const roles = await ctx.db.select().from(schema.roles);
             const perms = await ctx.db.select().from(schema.rolePermissions);
@@ -26,7 +26,7 @@ export const usersRolesRouter = createTRPCRouter({
 
     getRole: protectedProcedure
         .input(z.object({ id: z.string() }))
-        .use(requirePerm('roles.manage'))
+        .use(requirePerm('users-roles.roles.manage'))
         .query(async ({ ctx, input }: any) => {
             const role = await ctx.db.select()
                 .from(schema.roles)
@@ -54,7 +54,7 @@ export const usersRolesRouter = createTRPCRouter({
             description: z.string().optional(),
             permissions: z.array(z.string())
         }))
-        .use(requirePerm('roles.manage'))
+        .use(requirePerm('users-roles.roles.manage'))
         .mutation(async ({ ctx, input }: any) => {
             return await ctx.db.transaction(async (tx: any) => {
                 await tx.insert(schema.roles).values({
@@ -85,7 +85,7 @@ export const usersRolesRouter = createTRPCRouter({
             description: z.string().optional(),
             permissions: z.array(z.string())
         }))
-        .use(requirePerm('roles.manage'))
+        .use(requirePerm('users-roles.roles.manage'))
         .mutation(async ({ ctx, input }: any) => {
             return await ctx.db.transaction(async (tx: any) => {
                 await tx.update(schema.roles)
@@ -117,7 +117,7 @@ export const usersRolesRouter = createTRPCRouter({
 
     deleteRole: protectedProcedure
         .input(z.object({ id: z.string() }))
-        .use(requirePerm('roles.manage'))
+        .use(requirePerm('users-roles.roles.manage'))
         .mutation(async ({ ctx, input }: any) => {
             await ctx.db.delete(schema.roles).where(eq(schema.roles.id, input.id));
             await logAudit(ctx.db, ctx.user.id, 'roles.delete', 'users-roles', input.id);
@@ -127,14 +127,14 @@ export const usersRolesRouter = createTRPCRouter({
     // --- User Assignment ---
 
     listUsers: protectedProcedure
-        .use(requirePerm('users.manage'))
+        .use(requirePerm('users-roles.users.manage'))
         .query(async ({ ctx }: any) => {
             return await ctx.db.select().from(schema.users);
         }),
 
     getUserRoles: protectedProcedure
         .input(z.object({ userId: z.string() }))
-        .use(requirePerm('users.manage'))
+        .use(requirePerm('users-roles.users.manage'))
         .query(async ({ ctx, input }: any) => {
             return await ctx.db.select()
                 .from(schema.userRoles)
@@ -146,7 +146,7 @@ export const usersRolesRouter = createTRPCRouter({
             userId: z.string(),
             roleIds: z.array(z.string())
         }))
-        .use(requirePerm('users.manage'))
+        .use(requirePerm('users-roles.users.manage'))
         .mutation(async ({ ctx, input }: any) => {
             return await ctx.db.transaction(async (tx: any) => {
                 await tx.delete(schema.userRoles)
@@ -170,7 +170,7 @@ export const usersRolesRouter = createTRPCRouter({
     // --- Audit Logs ---
 
     listAuditLogs: protectedProcedure
-        .use(requirePerm('audit.read'))
+        .use(requirePerm('users-roles.audit.read'))
         .query(async ({ ctx }: any) => {
             return await ctx.db.select({
                 id: schema.auditLogs.id,

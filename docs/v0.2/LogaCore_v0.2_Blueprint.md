@@ -246,9 +246,9 @@ platform”.
 -   [x] RBAC v1 (Roles & Permissions Tables)
 -   [x] Role management UI
 
-## Milestone 3 [PARTIAL]
+## Milestone 3 [DONE]
 -   [x] CMS Lite plugin (CRUD + Permissions)
--   [ ] Audit log plugin
+-   [x] Audit log plugin (Integrated into users-roles for v0.2)
 
 ## Milestone 4
 

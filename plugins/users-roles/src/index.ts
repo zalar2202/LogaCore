@@ -16,17 +16,17 @@ export const plugin = definePlugin({
 
     permissions: [
         {
-            key: 'roles.manage',
+            key: 'users-roles.roles.manage',
             name: 'Manage Roles',
             description: 'Create, edit and delete system roles',
         },
         {
-            key: 'users.manage',
+            key: 'users-roles.users.manage',
             name: 'Manage Users',
             description: 'Assign roles to users and manage user details',
         },
         {
-            key: 'audit.read',
+            key: 'users-roles.audit.read',
             name: 'Read Audit Logs',
             description: 'View the system-wide action history',
         }
@@ -38,13 +38,13 @@ export const plugin = definePlugin({
                 id: 'rbac',
                 label: 'Users & Roles',
                 href: '/admin/rbac',
-                requiredPerms: ['roles.manage'],
+                requiredPerms: ['users-roles.roles.manage'],
             },
             {
                 id: 'audit',
                 label: 'Audit Logs',
                 href: '/admin/audit',
-                requiredPerms: ['audit.read'],
+                requiredPerms: ['users-roles.audit.read'],
             },
         ],
         pages: [
@@ -52,14 +52,14 @@ export const plugin = definePlugin({
                 id: 'role-management',
                 path: '/admin/rbac',
                 component: RoleManagement,
-                requiredPerms: ['roles.manage'],
+                requiredPerms: ['users-roles.roles.manage'],
                 title: 'Role Management',
             },
             {
                 id: 'audit-logs',
                 path: '/admin/audit',
                 component: AuditLogs,
-                requiredPerms: ['audit.read'],
+                requiredPerms: ['users-roles.audit.read'],
                 title: 'Audit Logs',
             },
         ],

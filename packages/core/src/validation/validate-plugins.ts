@@ -1,4 +1,5 @@
 import type { PluginDefinition } from '../types/plugin';
+import { version as coreVersion } from '../version';
 
 // ─── Validation Error ──────────────────────────────────────────
 
@@ -33,23 +34,30 @@ function validateUniqueIds(plugins: PluginDefinition[]): void {
 /**
  * Ensures all plugins have a non-empty requiredCoreVersion field.
  *
- * Actual semver range checking is stubbed for v0.1.
+ * NOTE: Full semver range check is arriving in v0.2.1.
+ * For now, we enforce that it must match the major/minor of the core.
  */
 function validateCoreVersions(plugins: PluginDefinition[]): void {
   for (const plugin of plugins) {
     if (!plugin.requiredCoreVersion) {
       throw new PluginValidationError(
         `Plugin "${plugin.id}" is missing "requiredCoreVersion". ` +
-          `Every plugin must declare a compatible core version range.`
+        `Every plugin must declare a compatible core version range.`
       );
     }
-    if (plugin.requiredCoreVersion.trim() === '') {
+
+    // Simple check: for v0.x.y, if it starts with ^ or ~, we strip and check prefix
+    const range = plugin.requiredCoreVersion.replace(/[\^~]/, '');
+    const [cMajor, cMinor] = coreVersion.split('.');
+    const [pMajor, pMinor] = range.split('.');
+
+    if (cMajor !== pMajor || cMinor !== pMinor) {
       throw new PluginValidationError(
-        `Plugin "${plugin.id}" has an empty "requiredCoreVersion". ` +
-          `Provide a valid semver range (e.g., "^0.1.0").`
+        `Plugin "${plugin.id}" requires core version "${plugin.requiredCoreVersion}", ` +
+        `but the current core version is "${coreVersion}". ` +
+        `Please update the plugin or core to match.`
       );
     }
-    // TODO: Implement actual semver range check against core version
   }
 }
 
@@ -64,8 +72,8 @@ function validateDependencies(plugins: PluginDefinition[]): void {
       if (!loadedIds.has(dep)) {
         throw new PluginValidationError(
           `Plugin "${plugin.id}" depends on "${dep}", ` +
-            `but "${dep}" is not included in the loaded plugins. ` +
-            `Add "${dep}" to your logacore.config.ts or remove the dependency.`
+          `but "${dep}" is not included in the loaded plugins. ` +
+          `Add "${dep}" to your logacore.config.ts or remove the dependency.`
         );
       }
     }
@@ -84,11 +92,31 @@ function validateAdminPaths(plugins: PluginDefinition[]): void {
       if (existing) {
         throw new PluginValidationError(
           `Duplicate admin path "${page.path}" registered by ` +
-            `plugin "${plugin.id}" (already claimed by "${existing}"). ` +
-            `Each admin page path must be unique across all plugins.`
+          `plugin "${plugin.id}" (already claimed by "${existing}"). ` +
+          `Each admin page path must be unique across all plugins.`
         );
       }
       seen.set(page.path, plugin.id);
+    }
+  }
+}
+
+/**
+ * Ensures all permissions follow the `pluginId.action` naming convention.
+ * This prevents cross-plugin permission collisions.
+ */
+function validatePermissionNamespacing(plugins: PluginDefinition[]): void {
+  for (const plugin of plugins) {
+    const perms = plugin.permissions ?? [];
+    for (const perm of perms) {
+      const prefix = `${plugin.id}.`;
+      // Exception: core permissions if we wanted them, but for now we enforce strict namespacing
+      if (!perm.key.startsWith(prefix) && perm.key !== '*') {
+        throw new PluginValidationError(
+          `Plugin "${plugin.id}" declared invalid permission key "${perm.key}". ` +
+          `Permissions must be namespaced with the plugin ID (e.g., "${plugin.id}.read").`
+        );
+      }
     }
   }
 }
@@ -105,8 +133,8 @@ function validateUniquePermissions(plugins: PluginDefinition[]): void {
       if (existing) {
         throw new PluginValidationError(
           `Duplicate permission key "${perm.key}" declared by ` +
-            `plugin "${plugin.id}" (already declared by "${existing}"). ` +
-            `Permission keys must be unique across all plugins.`
+          `plugin "${plugin.id}" (already declared by "${existing}"). ` +
+          `Permission keys must be unique across all plugins.`
         );
       }
       seen.set(perm.key, plugin.id);
@@ -129,5 +157,6 @@ export function validatePlugins(plugins: PluginDefinition[]): void {
   validateCoreVersions(plugins);
   validateDependencies(plugins);
   validateAdminPaths(plugins);
+  validatePermissionNamespacing(plugins);
   validateUniquePermissions(plugins);
 }
