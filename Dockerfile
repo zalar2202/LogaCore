@@ -35,6 +35,7 @@ ENV NEXT_TELEMETRY_DISABLED 1
 # Build the app (assuming demo-agency-portal is the main entry)
 RUN pnpm build
 RUN pnpm --filter @logacore/core run bundle:migrations
+RUN pnpm --filter @logacore/cli run bundle
 
 # --- STAGE 3: Runner ---
 FROM node:20-alpine AS runner
@@ -54,8 +55,9 @@ COPY --from=builder --chown=nextjs:nodejs /app/apps/demo-agency-portal/.next/sta
 # Copy plugins and core migrations (SQL files) 
 COPY --from=builder --chown=nextjs:nodejs /app/plugins ./plugins
 COPY --from=builder --chown=nextjs:nodejs /app/migrations ./migrations
-# Copy the compiled migration runner (bundled)
+# Copy the compiled migration runner and CLI (bundled)
 COPY --from=builder --chown=nextjs:nodejs /app/packages/core/dist/migrations/runner.bundle.js ./packages/core/dist/migrations/runner.bundle.js
+COPY --from=builder --chown=nextjs:nodejs /app/packages/cli/dist/bundle.js ./packages/cli/dist/bundle.js
 # Copy the startup script
 COPY --from=builder --chown=nextjs:nodejs /app/scripts/docker-start.sh ./scripts/docker-start.sh
 RUN chmod +x ./scripts/docker-start.sh
