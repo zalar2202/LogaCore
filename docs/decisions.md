@@ -255,4 +255,21 @@ Owner: Architecture Team
 
 ---
 
+## Strict Permission Namespacing
+
+Decision:
+All plugin permissions must follow a strict `pluginId.resource.action` (or `pluginId.action`) format. The core engine's `validatePlugins` runner enforces this at boot-time and will prevent the application from starting if a plugin attempts to declare unnamespaced or conflicting permissions.
+
+Rationale:
+
+- Prevents security collisions between independent plugins (e.g., both `cms` and `shop` having a generic `read` permission)
+- Ensures a clean, predictable RBAC auditing trail where every action is clearly attributed to a specific domain
+- Simplifies cross-plugin role management by categorization
+- Boot-time enforcement provides immediate developer feedback for contract violations
+
+Date: 2026-03-08
+Owner: Architecture Team
+
+---
+
 End of Document.

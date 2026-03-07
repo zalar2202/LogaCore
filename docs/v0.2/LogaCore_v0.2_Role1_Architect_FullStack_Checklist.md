@@ -12,13 +12,11 @@
 
 ## Plugin Tasks
 
-- [x] Define CMS schema
-- [x] Implement CRUD UI
-- [x] Enforce permission guards
-- [x] Integrate into admin shell
-- [x] Role Management UI
-- [x] Add audit logging hooks
-- [x] Implement Audit Log UI
+- [x] Full Block-Based CMS Architecture
+- [x] Page Composition & SEO metadata
+- [x] Transactional block sequencing
+- [x] @logacore/cli (Bootstrapped)
+- [x] `plugin:create` Scaffolding command
 
 ## Stability Tasks
 

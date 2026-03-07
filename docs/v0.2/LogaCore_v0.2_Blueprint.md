@@ -238,8 +238,8 @@ platform”.
 
 # 8. Milestone Roadmap
 
-## Milestone 1 [PARTIAL]
--   [ ] Plugin validation enforcement  
+## Milestone 1 [DONE]
+-   [x] Plugin validation enforcement (Strict Namespacing & Verification)
 -   [x] Migration runner v1 (Bundled & Standardized)
 
 ## Milestone 2 [DONE]
@@ -247,13 +247,17 @@ platform”.
 -   [x] Role management UI
 
 ## Milestone 3 [DONE]
--   [x] CMS Lite plugin (CRUD + Permissions)
--   [x] Audit log plugin (Integrated into users-roles for v0.2)
+- [x] Full Block-Based CMS Architecture (v0.2 Enterprise Grade)
+- [x] Relational schemas (`cms_pages`, `cms_blocks`, `cms_page_blocks`)
+- [x] High-end Admin UI with Page/Block Editors and SEO Metadata
+- [x] Audit log integration
 
-## Milestone 4
+## Milestone 4 [IN PROGRESS]
+- [x] CLI Bootstrapping (@logacore/cli)
+- [x] Plugin Scaffolding command (`plugin:create`)
+- [ ] Migration generation tools
+- [ ] Root workspace automation
 
--   CLI v0 scaffolding  
--   Template extraction
 
 ## Milestone 5
 
