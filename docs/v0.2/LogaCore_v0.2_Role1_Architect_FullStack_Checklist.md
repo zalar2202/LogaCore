@@ -7,6 +7,8 @@
 - [x] Harden migration runner (Bundled for production)
 - [x] Implement RBAC enforcement layer
 - [x] Implement CMS plugin
+- [x] Optimize JWT auth callback (Performance + Stability)
+- [x] Centralize Admin Context (@logacore/core/admin)
 
 ## Plugin Tasks
 
@@ -15,16 +17,18 @@
 - [x] Enforce permission guards
 - [x] Integrate into admin shell
 - [x] Role Management UI
-- [ ] Add audit logging hooks
+- [x] Add audit logging hooks
 
 ## Stability Tasks
 
--   Validate dependency resolution
--   Test plugin removal behavior
--   Ensure no route collisions
+- [x] Validate dependency resolution (pnpm overrides)
+- [x] Test plugin resolution (Source TS exports)
+- [x] Ensure no route collisions (Dynamic catch-all + Registry)
+- [x] Idempotent DB Migrations (RBAC bootstrapping)
 
 Definition of Completion:
 
--   CMS plugin deployable
--   RBAC fully enforced
--   Migrations deterministic
+- [x] CMS plugin deployable
+- [x] RBAC fully enforced
+- [x] Migrations deterministic
+- [x] No app-crashing side effects during auth or navigation

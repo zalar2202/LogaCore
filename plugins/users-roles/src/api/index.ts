@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { createTRPCRouter, protectedProcedure, requirePerm } from '@logacore/core/trpc';
 import { schema } from '@logacore/db';
 import { eq, inArray } from 'drizzle-orm';
+import { logAudit } from '@logacore/core/server';
 
 /**
  * tRPC Router for User & Role Management
@@ -12,7 +13,15 @@ export const usersRolesRouter = createTRPCRouter({
     listRoles: protectedProcedure
         .use(requirePerm('roles.manage'))
         .query(async ({ ctx }: any) => {
-            return await ctx.db.select().from(schema.roles);
+            const roles = await ctx.db.select().from(schema.roles);
+            const perms = await ctx.db.select().from(schema.rolePermissions);
+
+            return roles.map((role: any) => ({
+                ...role,
+                permissions: perms
+                    .filter((p: any) => p.roleId === role.id)
+                    .map((p: any) => p.permission)
+            }));
         }),
 
     getRole: protectedProcedure
@@ -62,6 +71,9 @@ export const usersRolesRouter = createTRPCRouter({
                         }))
                     );
                 }
+
+                await logAudit(tx, ctx.session.user.id, 'roles.create', 'users-roles', input.id, input);
+
                 return { success: true };
             });
         }),
@@ -96,6 +108,9 @@ export const usersRolesRouter = createTRPCRouter({
                         }))
                     );
                 }
+
+                await logAudit(tx, ctx.session.user.id, 'roles.update', 'users-roles', input.id, input);
+
                 return { success: true };
             });
         }),
@@ -105,6 +120,7 @@ export const usersRolesRouter = createTRPCRouter({
         .use(requirePerm('roles.manage'))
         .mutation(async ({ ctx, input }: any) => {
             await ctx.db.delete(schema.roles).where(eq(schema.roles.id, input.id));
+            await logAudit(ctx.db, ctx.session.user.id, 'roles.delete', 'users-roles', input.id);
             return { success: true };
         }),
 
@@ -144,6 +160,9 @@ export const usersRolesRouter = createTRPCRouter({
                         }))
                     );
                 }
+
+                await logAudit(tx, ctx.session.user.id, 'users.assign_roles', 'users-roles', input.userId, { roles: input.roleIds });
+
                 return { success: true };
             });
         }),
