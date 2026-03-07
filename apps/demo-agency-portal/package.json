@@ -11,8 +11,9 @@
   "dependencies": {
     "@logacore/core": "workspace:*",
     "@logacore/db": "workspace:*",
-    "@logacore/plugin-hello-world": "workspace:*",
     "@logacore/plugin-cms": "workspace:*",
+    "@logacore/plugin-hello-world": "workspace:*",
+    "@logacore/plugin-users-roles": "workspace:*",
     "@tanstack/react-query": "^5.90.21",
     "@trpc/client": "^11.10.0",
     "@trpc/react-query": "^11.10.0",

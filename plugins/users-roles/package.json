@@ -1,0 +1,31 @@
+{
+    "name": "@logacore/plugin-users-roles",
+    "version": "0.1.0",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "default": "./dist/index.js"
+        },
+        "./api": {
+            "types": "./dist/src/api/index.d.ts",
+            "default": "./dist/src/api/index.js"
+        }
+    },
+    "scripts": {
+        "build": "tsc",
+        "dev": "tsc -w"
+    },
+    "dependencies": {
+        "@logacore/core": "workspace:*",
+        "@logacore/db": "workspace:*",
+        "zod": "^3.24.2",
+        "drizzle-orm": "^0.30.0"
+    },
+    "devDependencies": {
+        "typescript": "^5.9.3",
+        "@types/react": "^19.0.0",
+        "@types/node": "^20.19.34"
+    }
+}

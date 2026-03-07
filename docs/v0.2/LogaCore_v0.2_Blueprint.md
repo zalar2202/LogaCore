@@ -242,11 +242,11 @@ platform”.
 -   [ ] Plugin validation enforcement  
 -   [x] Migration runner v1 (Bundled & Standardized)
 
-## Milestone 2
--   [ ] RBAC v1 (Roles & Permissions Tables)
--   [ ] Role management UI
+## Milestone 2 [DONE]
+-   [x] RBAC v1 (Roles & Permissions Tables)
+-   [x] Role management UI
 
-## Milestone 3 [IN PROGRESS]
+## Milestone 3 [PARTIAL]
 -   [x] CMS Lite plugin (CRUD + Permissions)
 -   [ ] Audit log plugin
 

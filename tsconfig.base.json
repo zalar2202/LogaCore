@@ -2,7 +2,11 @@
   "compilerOptions": {
     "target": "ES2022",
     "module": "ESNext",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
+    ],
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
@@ -11,7 +15,36 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "Bundler",
-    "isolatedModules": true
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@logacore/core": [
+        "packages/core/index.ts"
+      ],
+      "@logacore/core/*": [
+        "packages/core/src/*"
+      ],
+      "@logacore/db": [
+        "packages/db/src/index.ts"
+      ],
+      "@logacore/db/*": [
+        "packages/db/src/*"
+      ],
+      "@logacore/plugin-hello-world": [
+        "plugins/hello-world/src/index.ts"
+      ],
+      "@logacore/plugin-cms": [
+        "plugins/cms/src/index.ts"
+      ],
+      "@logacore/plugin-users-roles": [
+        "plugins/users-roles/src/index.ts"
+      ]
+    }
   },
-  "exclude": ["node_modules", "dist", ".next"]
+  "exclude": [
+    "node_modules",
+    "dist",
+    ".next"
+  ]
 }
