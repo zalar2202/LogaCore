@@ -1,5 +1,6 @@
 import { definePlugin } from '@logacore/core';
 import { RoleManagement } from './pages/RoleManagement';
+import { AuditLogs } from './pages/AuditLogs';
 
 /**
  * LogaCore Users & Roles Plugin
@@ -23,6 +24,11 @@ export const plugin = definePlugin({
             key: 'users.manage',
             name: 'Manage Users',
             description: 'Assign roles to users and manage user details',
+        },
+        {
+            key: 'audit.read',
+            name: 'Read Audit Logs',
+            description: 'View the system-wide action history',
         }
     ],
 
@@ -34,6 +40,12 @@ export const plugin = definePlugin({
                 href: '/admin/rbac',
                 requiredPerms: ['roles.manage'],
             },
+            {
+                id: 'audit',
+                label: 'Audit Logs',
+                href: '/admin/audit',
+                requiredPerms: ['audit.read'],
+            },
         ],
         pages: [
             {
@@ -42,6 +54,13 @@ export const plugin = definePlugin({
                 component: RoleManagement,
                 requiredPerms: ['roles.manage'],
                 title: 'Role Management',
+            },
+            {
+                id: 'audit-logs',
+                path: '/admin/audit',
+                component: AuditLogs,
+                requiredPerms: ['audit.read'],
+                title: 'Audit Logs',
             },
         ],
     },
