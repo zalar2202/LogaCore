@@ -8,3 +8,4 @@
 export { loadPlugins } from './src/loader';
 export { validatePlugins, PluginValidationError } from './src/validation';
 export { resolveUserPermissions } from './src/rbac/resolver';
+export { logAudit } from './src/audit';

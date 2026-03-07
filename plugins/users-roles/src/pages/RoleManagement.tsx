@@ -53,7 +53,7 @@ export function RoleManagement() {
             id: role.id,
             name: role.name,
             description: role.description || '',
-            permissions: [] // We'd ideally fetch these in a detail query or keep em in the list
+            permissions: role.permissions || []
         });
         setIsModalOpen(true);
     };

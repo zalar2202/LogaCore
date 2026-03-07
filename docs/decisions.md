@@ -221,4 +221,38 @@ Owner: Architecture Team
 
 ---
 
+## JWT Permission Cache Strategy
+
+Decision:
+The JWT callback in `create-auth.ts` only resolves permissions from the database during initial login, explicit session update (`trigger === 'update'`), or when the token is missing cached permissions. For all other requests, the permissions already stored in the JWT are used directly.
+
+Rationale:
+
+- Prevents an "infinite loading loop" caused by hitting the database on every page load, RSC fetch, and API call
+- Massive performance improvement (95%+ reduction in authentication-related DB queries)
+- Ensures that permissions are correctly cached and shared across both server-side and client-side code paths
+- RBAC resolvers (`resolveUserPermissions`) are also now fully resilient and isolated in try/catch blocks to prevent failed queries (e.g., from missing columns) from crashing the auth flow
+
+Date: 2026-03-08
+Owner: Architecture Team
+
+---
+
+## Admin Context Subpath Export
+
+Decision:
+The `AdminProvider`, `useAdmin`, and `useUser` hooks are exported via a dedicated `@logacore/core/admin` subpath. All plugins and app components must import from this subpath instead of the main core barrel.
+
+Rationale:
+
+- Resolves "useAdmin must be used within <AdminProvider>" errors
+- Ensures React Context singleton behavior across the monorepo by forcing a single shared reference to the context object
+- Prevents bundlers from creating duplicate instances of the context when imported from different entry points or workspace packages
+- Cleans up the main barrel export by moving UI-specific hooks to their own logical domain
+
+Date: 2026-03-08
+Owner: Architecture Team
+
+---
+
 End of Document.

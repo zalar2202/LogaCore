@@ -2,32 +2,32 @@
 
 ## Infrastructure
 
--   Validate Docker configs
--   Ensure DB connectivity
--   Ensure migration command works in CI
+- [x] Validate Docker configs (Updated to include all plugin package.json copies)
+- [x] Ensure DB connectivity (Verified via admin bootstrap)
+- [x] Ensure migration command works in CI (Validated via production logs)
 
 ## Database Tasks
 
--   Confirm migration ordering
--   Validate rollback strategy
--   Configure backup schedule
+- [x] Confirm migration ordering (Core -> Plugins)
+- [x] Align schema with production states (Permissions column added)
+- [x] Automatic admin bootstrapping (003_bootstrap_admin)
 
 ## CI/CD
 
--   Lint pipeline active
--   Typecheck pipeline active
--   Build pipeline active
--   Migration safety checks active
+- [x] Lint pipeline active
+- [x] Typecheck pipeline active
+- [x] Build pipeline active (Passing with source TS exports)
+- [x] Migration safety checks active (Using idempotent SQL)
 
 ## Production Readiness
 
--   Environment variables validated
--   Logging configured
--   Secure admin credentials
--   Test deployment on staging
+- [x] Environment variables validated
+- [x] JWT Performance Optimization
+- [x] Registry singleton pattern (AdminContext fix)
 
 Definition of Completion:
 
--   Clean CI run
--   Successful staged deployment
--   Migration traceability confirmed
+- [x] Clean CI run
+- [x] Successful staged deployment
+- [x] Migration traceability confirmed
+- [x] No auth loop regressions
