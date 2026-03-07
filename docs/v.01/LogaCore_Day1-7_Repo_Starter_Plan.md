@@ -110,16 +110,16 @@ db:migrate works from clean install.
 
 ---
 
-# Day 7 – Hardening + Documentation
+# Day 7 – Hardening + Documentation [COMPLETED]
 
-- Integrate authentication
-- Protect /admin routes
-- Write README.md
-- Write docs/plugin-authoring.md
-- Test clean install from scratch
+- [x] Integrate authentication
+- [x] Protect /admin routes
+- [x] Write README.md
+- [x] Write docs/plugin-authoring.md
+- [x] Test clean install from scratch
 
 Deliverable:
-Stable internal v0.1 foundation.
+Stable internal v0.1 foundation. COMPLETED.
 
 ---
 
