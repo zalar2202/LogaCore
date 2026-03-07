@@ -2,7 +2,7 @@
 
 import type { ReactNode } from 'react';
 import type { PluginRegistry, User } from '@logacore/core';
-import { AdminProvider } from './AdminContext';
+import { AdminProvider } from '@logacore/core/admin';
 import { Sidebar } from './Sidebar';
 import { Topbar } from './Topbar';
 

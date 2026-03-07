@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { canAll } from '@logacore/core';
-import { useAdmin, useUser } from './AdminContext';
+import { useAdmin, useUser } from '@logacore/core/admin';
 
 export function Sidebar() {
   const registry = useAdmin();
@@ -28,11 +28,10 @@ export function Sidebar() {
       <nav className="flex-1 overflow-y-auto p-2">
         <Link
           href="/admin"
-          className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm transition-colors ${
-            pathname === '/admin'
+          className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm transition-colors ${pathname === '/admin'
               ? 'bg-slate-800 text-white'
               : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
-          }`}
+            }`}
         >
           Dashboard
         </Link>
@@ -43,11 +42,10 @@ export function Sidebar() {
               <Link
                 key={item.id}
                 href={item.href}
-                className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm transition-colors ${
-                  pathname.startsWith(item.href)
+                className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm transition-colors ${pathname.startsWith(item.href)
                     ? 'bg-slate-800 text-white'
                     : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
-                }`}
+                  }`}
               >
                 {item.label}
               </Link>
