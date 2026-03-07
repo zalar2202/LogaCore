@@ -12,6 +12,7 @@ import type { User } from '../types/user';
  */
 export function can(user: User | null, perm: string): boolean {
   if (user === null) return true;
+  if (user.permissions.includes('*')) return true;
   return user.permissions.includes(perm);
 }
 
@@ -27,5 +28,6 @@ export function can(user: User | null, perm: string): boolean {
  */
 export function canAll(user: User | null, perms: string[]): boolean {
   if (user === null) return true;
+  if (user.permissions.includes('*')) return true;
   return perms.every((perm) => user.permissions.includes(perm));
 }
