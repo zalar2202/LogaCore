@@ -2,8 +2,9 @@ import { eq, inArray } from 'drizzle-orm';
 import { schema } from '@logacore/db';
 
 /**
- * Resolves all permissions for a user by aggregating permissions from all their assigned roles,
- * including any direct permissions assigned to the user record.
+ * Resolves all permissions for a user by aggregating permissions from all their assigned roles.
+ * 
+ * Falls back gracefully if the direct permissions column doesn't exist on the users table.
  * 
  * @param db - Drizzle database instance
  * @param userId - ID of the user to resolve permissions for
@@ -11,15 +12,21 @@ import { schema } from '@logacore/db';
  */
 export async function resolveUserPermissions(db: any, userId: string): Promise<string[]> {
     try {
-        // 1. Get direct permissions from user table
-        const userRes = await db.select({
-            permissions: schema.users.permissions
-        })
-            .from(schema.users)
-            .where(eq(schema.users.id, userId))
-            .limit(1);
+        // 1. Try to get direct permissions from user table (may not exist in older schemas)
+        let directPermissions: string[] = [];
+        try {
+            const userRes = await db.select({
+                permissions: schema.users.permissions
+            })
+                .from(schema.users)
+                .where(eq(schema.users.id, userId))
+                .limit(1);
 
-        const directPermissions = userRes[0]?.permissions || [];
+            directPermissions = userRes[0]?.permissions || [];
+        } catch {
+            // Column may not exist in production DB yet — skip direct permissions
+            console.warn('Could not read direct permissions from users table, using RBAC roles only.');
+        }
 
         // 2. Get roles for this user
         const userRoles = await db.select({
