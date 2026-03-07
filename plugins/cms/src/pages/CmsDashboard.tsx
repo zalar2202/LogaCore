@@ -6,6 +6,7 @@ import { trpc } from '@/lib/trpc/client';
 export function CmsDashboard() {
     const utils = trpc.useUtils();
     const posts = trpc.cms.listPosts.useQuery();
+
     const createPost = trpc.cms.createPost.useMutation({
         onSuccess: () => {
             utils.cms.listPosts.invalidate();
@@ -13,6 +14,15 @@ export function CmsDashboard() {
             resetForm();
         }
     });
+
+    const updatePost = trpc.cms.updatePost.useMutation({
+        onSuccess: () => {
+            utils.cms.listPosts.invalidate();
+            setIsModalOpen(false);
+            resetForm();
+        }
+    });
+
     const deletePost = trpc.cms.deletePost.useMutation({
         onSuccess: () => {
             utils.cms.listPosts.invalidate();
@@ -20,6 +30,7 @@ export function CmsDashboard() {
     });
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [editingId, setEditingId] = useState<string | null>(null);
     const [formData, setFormData] = useState({
         title: '',
         slug: '',
@@ -27,16 +38,16 @@ export function CmsDashboard() {
         status: 'draft' as 'draft' | 'published'
     });
 
-    // Auto-generate slug from title
+    // Auto-generate slug from title (only when creating)
     useEffect(() => {
-        if (formData.title && !formData.slug) {
+        if (!editingId && formData.title && !formData.slug) {
             const generatedSlug = formData.title
                 .toLowerCase()
                 .replace(/[^\w ]+/g, '')
                 .replace(/ +/g, '-');
             setFormData(prev => ({ ...prev, slug: generatedSlug }));
         }
-    }, [formData.title]);
+    }, [formData.title, editingId]);
 
     const resetForm = () => {
         setFormData({
@@ -45,11 +56,32 @@ export function CmsDashboard() {
             content: '',
             status: 'draft'
         });
+        setEditingId(null);
+    };
+
+    const handleEdit = (post: any) => {
+        setEditingId(post.id);
+        setFormData({
+            title: post.title,
+            slug: post.slug,
+            content: post.content || '',
+            status: post.status
+        });
+        setIsModalOpen(true);
     };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        createPost.mutate(formData);
+        if (editingId) {
+            updatePost.mutate({
+                id: editingId,
+                title: formData.title,
+                content: formData.content,
+                status: formData.status
+            });
+        } else {
+            createPost.mutate(formData);
+        }
     };
 
     const handleDelete = (id: string, title: string) => {
@@ -71,7 +103,10 @@ export function CmsDashboard() {
                 </div>
                 <button
                     className="rounded-md bg-violet-600 px-4 py-2 text-sm font-medium text-white hover:bg-violet-500 transition-colors"
-                    onClick={() => setIsModalOpen(true)}
+                    onClick={() => {
+                        resetForm();
+                        setIsModalOpen(true);
+                    }}
                 >
                     Create Post
                 </button>
@@ -133,8 +168,8 @@ export function CmsDashboard() {
                                 </td>
                                 <td className="px-4 py-3">
                                     <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${post.status === 'published'
-                                            ? 'bg-emerald-500/10 text-emerald-400'
-                                            : 'bg-amber-500/10 text-amber-400'
+                                        ? 'bg-emerald-500/10 text-emerald-400'
+                                        : 'bg-amber-500/10 text-amber-400'
                                         }`}>
                                         {post.status}
                                     </span>
@@ -143,7 +178,12 @@ export function CmsDashboard() {
                                     {new Date(post.createdAt!).toLocaleDateString()}
                                 </td>
                                 <td className="px-4 py-3 text-right">
-                                    <button className="text-violet-400 hover:text-violet-300 mr-3">Edit</button>
+                                    <button
+                                        className="text-violet-400 hover:text-violet-300 mr-3"
+                                        onClick={() => handleEdit(post)}
+                                    >
+                                        Edit
+                                    </button>
                                     <button
                                         className="text-red-400 hover:text-red-300 disabled:opacity-50"
                                         disabled={deletePost.isPending}
@@ -162,7 +202,9 @@ export function CmsDashboard() {
             {isModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
                     <div className="w-full max-w-lg rounded-xl border border-slate-700 bg-slate-900 p-6 shadow-2xl">
-                        <h3 className="text-xl font-bold text-slate-100 mb-4">Create New Post</h3>
+                        <h3 className="text-xl font-bold text-slate-100 mb-4">
+                            {editingId ? 'Edit Post' : 'Create New Post'}
+                        </h3>
 
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div className="space-y-1.5">
@@ -181,8 +223,9 @@ export function CmsDashboard() {
                                 <label className="text-sm font-medium text-slate-400">Slug</label>
                                 <input
                                     required
+                                    disabled={!!editingId} // Disable slug editing for simplicity/safety
                                     type="text"
-                                    className="w-full rounded-md border border-slate-700 bg-slate-800 px-3 py-2 text-slate-100 placeholder-slate-500 focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500"
+                                    className="w-full rounded-md border border-slate-700 bg-slate-800 px-3 py-2 text-slate-100 placeholder-slate-500 focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500 disabled:opacity-50"
                                     placeholder="future-of-logacore"
                                     value={formData.slug}
                                     onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
@@ -216,22 +259,25 @@ export function CmsDashboard() {
                                 <button
                                     type="button"
                                     className="px-4 py-2 text-sm font-medium text-slate-400 hover:text-slate-200 transition-colors"
-                                    onClick={() => setIsModalOpen(false)}
+                                    onClick={() => {
+                                        setIsModalOpen(false);
+                                        resetForm();
+                                    }}
                                 >
                                     Cancel
                                 </button>
                                 <button
                                     type="submit"
-                                    disabled={createPost.isPending}
+                                    disabled={createPost.isPending || updatePost.isPending}
                                     className="rounded-md bg-violet-600 px-6 py-2 text-sm font-medium text-white hover:bg-violet-500 transition-colors disabled:opacity-50"
                                 >
-                                    {createPost.isPending ? 'Saving...' : 'Create Post'}
+                                    {createPost.isPending || updatePost.isPending ? 'Saving...' : editingId ? 'Update Post' : 'Create Post'}
                                 </button>
                             </div>
 
-                            {createPost.error && (
+                            {(createPost.error || updatePost.error) && (
                                 <p className="text-sm text-red-500 mt-2">
-                                    Error: {createPost.error.message}
+                                    Error: {createPost.error?.message || updatePost.error?.message}
                                 </p>
                             )}
                         </form>
