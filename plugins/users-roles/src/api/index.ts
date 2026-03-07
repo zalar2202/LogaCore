@@ -72,7 +72,7 @@ export const usersRolesRouter = createTRPCRouter({
                     );
                 }
 
-                await logAudit(tx, ctx.session.user.id, 'roles.create', 'users-roles', input.id, input);
+                await logAudit(tx, ctx.user.id, 'roles.create', 'users-roles', input.id, input);
 
                 return { success: true };
             });
@@ -109,7 +109,7 @@ export const usersRolesRouter = createTRPCRouter({
                     );
                 }
 
-                await logAudit(tx, ctx.session.user.id, 'roles.update', 'users-roles', input.id, input);
+                await logAudit(tx, ctx.user.id, 'roles.update', 'users-roles', input.id, input);
 
                 return { success: true };
             });
@@ -120,7 +120,7 @@ export const usersRolesRouter = createTRPCRouter({
         .use(requirePerm('roles.manage'))
         .mutation(async ({ ctx, input }: any) => {
             await ctx.db.delete(schema.roles).where(eq(schema.roles.id, input.id));
-            await logAudit(ctx.db, ctx.session.user.id, 'roles.delete', 'users-roles', input.id);
+            await logAudit(ctx.db, ctx.user.id, 'roles.delete', 'users-roles', input.id);
             return { success: true };
         }),
 
@@ -161,7 +161,7 @@ export const usersRolesRouter = createTRPCRouter({
                     );
                 }
 
-                await logAudit(tx, ctx.session.user.id, 'users.assign_roles', 'users-roles', input.userId, { roles: input.roleIds });
+                await logAudit(tx, ctx.user.id, 'users.assign_roles', 'users-roles', input.userId, { roles: input.roleIds });
 
                 return { success: true };
             });
