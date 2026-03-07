@@ -164,4 +164,61 @@ Owner:
 
 ---
 
+## Package Export Strategy
+
+Decision:
+All internal packages (`@logacore/core`, `@logacore/db`, plugins) export source `.ts` files directly instead of compiled `dist/` output. Next.js `externalDir` compiles these on-the-fly via Turbopack.
+
+Rationale:
+
+- Eliminates stale `dist/` artifacts causing "Module not found" errors
+- Consistent pattern across all packages and plugins
+- No separate build step required for workspace packages before app build
+- Turbopack handles compilation, ensuring a single source of truth
+- Simplifies developer workflow (no need to run `tsc -w` on each package during development)
+
+Date: 2026-03-08
+Owner: Architecture Team
+
+---
+
+## Client/Server Barrel Separation
+
+Decision:
+The `@logacore/core` main entry point (`index.ts`) only exports client-safe utilities. Server-only tools are available via subpath exports:
+- `@logacore/core/trpc` → tRPC server utilities (router, procedures, middleware)
+- `@logacore/core/auth` → Auth.js wrapper (imports DB, NextAuth)
+- `@logacore/core/server` → Plugin loader, validation, RBAC resolver
+
+The main barrel exports `trpc` (the React hook) directly from `./src/trpc/client.ts`, bypassing the server barrel.
+
+Rationale:
+
+- Prevents Node.js-only modules (`fs`, `net`, `pg`, `postgres`) from leaking into client bundles
+- Resolves "Module not found" errors during Next.js Turbopack builds
+- Enforces clean separation of server and client code
+- Plugins import client-safe tools from `@logacore/core`, server tools from subpaths
+
+Date: 2026-03-08
+Owner: Architecture Team
+
+---
+
+## Dependency Version Alignment
+
+Decision:
+Use `pnpm.overrides` in the root `package.json` to enforce a single version of critical shared libraries across the monorepo: `drizzle-orm@^0.45.1`, `@trpc/server@^11.10.0`, `@trpc/client@^11.10.0`, `@trpc/react-query@^11.10.0`.
+
+Rationale:
+
+- Multiple versions of `drizzle-orm` (e.g., `0.30.10` and `0.45.1`) cause "separate declarations of private property" type errors
+- Shared types must come from a single package instance to maintain compatibility across the monorepo
+- `pnpm.overrides` is the standard mechanism for enforcing version alignment in pnpm workspaces
+- Prevents future regressions when adding new plugins with potentially outdated dependencies
+
+Date: 2026-03-08
+Owner: Architecture Team
+
+---
+
 End of Document.

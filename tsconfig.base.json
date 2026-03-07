@@ -22,6 +22,12 @@
       "@logacore/core": [
         "packages/core/index.ts"
       ],
+      "@logacore/core/trpc": [
+        "packages/core/src/trpc/index.ts"
+      ],
+      "@logacore/core/auth": [
+        "packages/core/src/auth/index.ts"
+      ],
       "@logacore/core/*": [
         "packages/core/src/*"
       ],

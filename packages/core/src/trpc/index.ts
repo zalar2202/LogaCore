@@ -9,3 +9,4 @@ export {
 export { publicProcedure, protectedProcedure } from './procedures';
 
 export { requirePerm } from './middleware';
+export { trpc } from './client';

@@ -5,10 +5,8 @@ export { version } from './src/version';
 export { definePlugin } from './src/plugin';
 export { defineConfig } from './src/config';
 
-// ─── Plugin Loader ─────────────────────────────────────────────
+// ─── Shared Utilities ──────────────────────────────────────────
 export { loadPlugins } from './src/loader';
-
-// ─── Validation ────────────────────────────────────────────────
 export { validatePlugins, PluginValidationError } from './src/validation';
 
 // ─── tRPC ─────────────────────────────────────────────────────
@@ -16,9 +14,10 @@ export { validatePlugins, PluginValidationError } from './src/validation';
 // Kept out of this barrel to avoid pulling @trpc/server into
 // client bundles.
 
-// ─── RBAC ─────────────────────────────────────────────────────
 export { can, canAll } from './src/rbac';
 export { Require } from './src/rbac';
+export { useAdmin, useUser, AdminProvider } from './src/admin/AdminContext';
+export { trpc } from './src/trpc/client';
 
 // ─── Types ─────────────────────────────────────────────────────
 export type {
