@@ -1,0 +1,29 @@
+{
+    "name": "@logacore/cli",
+    "version": "0.1.0",
+    "description": "LogaCore Command Line Interface for scaffolding and managing plugins.",
+    "main": "./dist/index.js",
+    "bin": {
+        "logacore": "./dist/index.js"
+    },
+    "type": "module",
+    "scripts": {
+        "build": "tsc",
+        "dev": "tsc -w",
+        "prepublishOnly": "npm run build"
+    },
+    "dependencies": {
+        "cac": "^6.7.14",
+        "chalk": "^5.3.0",
+        "enquirer": "^2.4.1",
+        "execa": "^9.5.2",
+        "fs-extra": "^11.2.0",
+        "handlebars": "^4.7.8",
+        "ora": "^8.0.1"
+    },
+    "devDependencies": {
+        "@types/fs-extra": "^11.0.4",
+        "@types/node": "^20.19.34",
+        "typescript": "^5.3.0"
+    }
+}

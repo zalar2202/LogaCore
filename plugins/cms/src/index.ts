@@ -1,52 +1,84 @@
 import { definePlugin } from '@logacore/core';
-import { CmsDashboard } from './pages/CmsDashboard';
+import { PagesList } from './pages/PagesList';
+import { PageEditor } from './pages/PageEditor';
+import { BlocksList } from './pages/BlocksList';
+import { BlockEditor } from './pages/BlockEditor';
 
 /**
  * LogaCore CMS Plugin
  *
- * Provides blogging/content management capabilities.
+ * Provides enterprise-grade Block Content Architecture (v0.2).
  */
 export const plugin = definePlugin({
     id: 'cms',
     name: 'CMS',
     version: '0.1.0',
     requiredCoreVersion: '^0.1.0',
-    description: 'Manage blog posts and articles.',
+    description: 'Manage block-based pages and reusable content units.',
 
     permissions: [
         {
             key: 'cms.read',
             name: 'Read CMS',
-            description: 'View the CMS dashboard and post list',
+            description: 'View the CMS dashboard, pages, and blocks',
         },
         {
             key: 'cms.write',
             name: 'Write CMS',
-            description: 'Create and edit blog posts',
+            description: 'Create and edit pages and blocks',
         },
         {
             key: 'cms.delete',
             name: 'Delete CMS',
-            description: 'Delete blog posts',
+            description: 'Permanently remove CMS content',
         }
     ],
 
     admin: {
         navItems: [
             {
-                id: 'cms',
-                label: 'CMS',
-                href: '/admin/cms',
+                id: 'cms-pages',
+                label: 'CMS Pages',
+                href: '/admin/cms/pages',
+                requiredPerms: ['cms.read'],
+            },
+            {
+                id: 'cms-blocks',
+                label: 'CMS Blocks',
+                href: '/admin/cms/blocks',
                 requiredPerms: ['cms.read'],
             },
         ],
         pages: [
+            // --- Pages ---
             {
-                id: 'cms-dashboard',
-                path: '/admin/cms',
-                component: CmsDashboard,
+                id: 'cms-pages-list',
+                path: '/admin/cms/pages',
+                component: PagesList,
                 requiredPerms: ['cms.read'],
-                title: 'CMS Dashboard',
+                title: 'All Pages',
+            },
+            {
+                id: 'cms-page-editor',
+                path: '/admin/cms/pages/[id]',
+                component: PageEditor,
+                requiredPerms: ['cms.write'],
+                title: 'Edit Page',
+            },
+            // --- Blocks ---
+            {
+                id: 'cms-blocks-list',
+                path: '/admin/cms/blocks',
+                component: BlocksList,
+                requiredPerms: ['cms.read'],
+                title: 'All Blocks',
+            },
+            {
+                id: 'cms-block-editor',
+                path: '/admin/cms/blocks/[id]',
+                component: BlockEditor,
+                requiredPerms: ['cms.write'],
+                title: 'Edit Block',
             },
         ],
     },
