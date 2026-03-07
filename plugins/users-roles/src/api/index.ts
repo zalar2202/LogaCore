@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { createTRPCRouter, protectedProcedure, requirePerm } from '@logacore/core/trpc';
 import { schema } from '@logacore/db';
-import { eq, inArray } from 'drizzle-orm';
+import { eq, inArray, desc } from 'drizzle-orm';
 import { logAudit } from '@logacore/core/server';
 
 /**
@@ -165,5 +165,29 @@ export const usersRolesRouter = createTRPCRouter({
 
                 return { success: true };
             });
+        }),
+
+    // --- Audit Logs ---
+
+    listAuditLogs: protectedProcedure
+        .use(requirePerm('audit.read'))
+        .query(async ({ ctx }: any) => {
+            return await ctx.db.select({
+                id: schema.auditLogs.id,
+                action: schema.auditLogs.action,
+                pluginId: schema.auditLogs.pluginId,
+                targetId: schema.auditLogs.targetId,
+                data: schema.auditLogs.data,
+                createdAt: schema.auditLogs.createdAt,
+                user: {
+                    id: schema.users.id,
+                    name: schema.users.name,
+                    email: schema.users.email,
+                }
+            })
+                .from(schema.auditLogs)
+                .leftJoin(schema.users, eq(schema.auditLogs.userId, schema.users.id))
+                .orderBy(desc(schema.auditLogs.createdAt))
+                .limit(100);
         }),
 });

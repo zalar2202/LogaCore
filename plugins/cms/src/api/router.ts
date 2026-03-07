@@ -8,6 +8,7 @@ import { TRPCError } from '@trpc/server';
 import { desc, eq } from 'drizzle-orm';
 import { posts } from '../db/schema';
 import type { db as DbType } from '@logacore/db';
+import { logAudit } from '@logacore/core/server';
 
 /**
  * CMS Plugin tRPC router.
@@ -20,7 +21,6 @@ export const cmsRouter = createTRPCRouter({
         .use(requirePerm('cms.read'))
         .query(async ({ ctx }) => {
             const db = ctx.db as typeof DbType;
-            // Manual select since cms_posts isn't in core schema.index
             return await db.select().from(posts).orderBy(desc(posts.createdAt));
         }),
 
@@ -71,6 +71,8 @@ export const cmsRouter = createTRPCRouter({
                 authorId: ctx.user.id,
             }).returning();
 
+            await logAudit(db, ctx.user.id, 'cms.post.create', 'cms', result[0].id, input);
+
             return result[0];
         }),
 
@@ -101,6 +103,10 @@ export const cmsRouter = createTRPCRouter({
                 });
             }
 
+            if (ctx.user) {
+                await logAudit(db, ctx.user.id, 'cms.post.update', 'cms', id, data);
+            }
+
             return result[0];
         }),
 
@@ -120,6 +126,10 @@ export const cmsRouter = createTRPCRouter({
                     code: 'NOT_FOUND',
                     message: 'Post not found',
                 });
+            }
+
+            if (ctx.user) {
+                await logAudit(db, ctx.user.id, 'cms.post.delete', 'cms', input.id);
             }
 
             return { success: true };
