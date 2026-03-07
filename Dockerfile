@@ -14,6 +14,7 @@ COPY packages/core/package.json ./packages/core/
 COPY packages/db/package.json ./packages/db/
 COPY plugins/hello-world/package.json ./plugins/hello-world/
 COPY plugins/cms/package.json ./plugins/cms/
+COPY plugins/users-roles/package.json ./plugins/users-roles/
 
 RUN pnpm install --frozen-lockfile
 
