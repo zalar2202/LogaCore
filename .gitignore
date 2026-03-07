@@ -36,3 +36,7 @@ next-env.d.ts
 
 # turbo
 .turbo/
+
+# skills and cli
+_skills/
+packages/cli/dist/
