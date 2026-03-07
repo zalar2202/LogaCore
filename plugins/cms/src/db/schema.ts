@@ -12,7 +12,7 @@ export const posts = pgTable('cms_posts', {
     slug: text('slug').notNull().unique(),
     content: text('content'),
     status: text('status').notNull().default('draft'), // draft, published
-    authorId: uuid('author_id').references(() => schema.users.id),
+    authorId: text('author_id').references(() => schema.users.id),
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
     updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow(),
 }, (table) => {
