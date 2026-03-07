@@ -1,6 +1,7 @@
 import NextAuth from 'next-auth';
 import { DrizzleAdapter } from '@auth/drizzle-adapter';
 import type { LogaCoreAuthConfig } from './types';
+import { resolveUserPermissions } from '../rbac/resolver';
 
 /**
  * Creates the Auth.js instance with LogaCore defaults.
@@ -23,11 +24,17 @@ export function createAuth(config: LogaCoreAuthConfig) {
       signIn: '/auth/signin',
     },
     callbacks: {
-      jwt({ token, user }) {
+      async jwt({ token, user, trigger }) {
         if (user) {
           token.id = user.id;
-          token.permissions = (user as any).permissions ?? [];
         }
+
+        // Fetch permissions if we have a user ID (on login OR explicit refresh)
+        // This ensures permissions are pulled from RBAC tables, not just the user JSON column
+        if (token.id) {
+          token.permissions = await resolveUserPermissions(config.db, token.id as string);
+        }
+
         return token;
       },
       session({ session, token }) {

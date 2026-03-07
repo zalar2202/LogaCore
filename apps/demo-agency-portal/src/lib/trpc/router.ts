@@ -1,6 +1,7 @@
 import { createTRPCRouter } from '@logacore/core/trpc';
 import { helloWorldRouter } from '@logacore/plugin-hello-world/api';
 import { cmsRouter } from '@logacore/plugin-cms/api';
+import { usersRolesRouter } from '@logacore/plugin-users-roles/api';
 
 /**
  * App-level tRPC router.
@@ -12,6 +13,7 @@ import { cmsRouter } from '@logacore/plugin-cms/api';
 export const appRouter = createTRPCRouter({
   'hello-world': helloWorldRouter,
   cms: cmsRouter,
+  'users-roles': usersRolesRouter,
 });
 
 export type AppRouter = typeof appRouter;
