@@ -53,8 +53,9 @@ COPY --from=builder /app/apps/demo-agency-portal/public ./apps/demo-agency-porta
 COPY --from=builder --chown=nextjs:nodejs /app/apps/demo-agency-portal/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/apps/demo-agency-portal/.next/static ./apps/demo-agency-portal/.next/static
 
-# Copy plugins for migrations (SQL files) 
+# Copy plugins and core migrations (SQL files) 
 COPY --from=builder --chown=nextjs:nodejs /app/plugins ./plugins
+COPY --from=builder --chown=nextjs:nodejs /app/migrations ./migrations
 # Copy the compiled migration runner (bundled)
 COPY --from=builder --chown=nextjs:nodejs /app/packages/core/dist/migrations/runner.bundle.js ./packages/core/dist/migrations/runner.bundle.js
 # Copy the startup script
