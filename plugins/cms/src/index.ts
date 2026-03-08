@@ -65,6 +65,13 @@ export const plugin = definePlugin({
                 requiredPerms: ['cms.write'],
                 title: 'Edit Page',
             },
+            {
+                id: 'cms-page-new',
+                path: '/admin/cms/pages/new',
+                component: PageEditor,
+                requiredPerms: ['cms.write'],
+                title: 'New Page',
+            },
             // --- Blocks ---
             {
                 id: 'cms-blocks-list',
@@ -79,6 +86,13 @@ export const plugin = definePlugin({
                 component: BlockEditor,
                 requiredPerms: ['cms.write'],
                 title: 'Edit Block',
+            },
+            {
+                id: 'cms-block-new',
+                path: '/admin/cms/blocks/new',
+                component: BlockEditor,
+                requiredPerms: ['cms.write'],
+                title: 'New Block',
             },
         ],
     },
