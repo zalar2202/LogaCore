@@ -27,7 +27,10 @@ cli
                     type: 'input',
                     name: 'name',
                     message: 'Plugin Name (Display):',
-                    initial: (id: string) => id.charAt(0).toUpperCase() + id.slice(1)
+                    initial() {
+                        const id = (this as any).state.answers.id;
+                        return id.charAt(0).toUpperCase() + id.slice(1);
+                    }
                 },
                 {
                     type: 'input',
