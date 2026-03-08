@@ -17,6 +17,7 @@
 - [x] Transactional block sequencing
 - [x] @logacore/cli (Bootstrapped)
 - [x] `plugin:create` Scaffolding command
+- [x] `migration:create` Automation command
 
 ## Stability Tasks
 

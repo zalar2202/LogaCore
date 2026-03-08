@@ -169,6 +169,59 @@ export const ${response.id.replace(/-/g, '_')}Items = pgTable('${response.id.rep
         }
     });
 
+cli
+    .command('migration:create <pluginId> [name]', 'Create a new migration for a plugin')
+    .action(async (pluginId, name) => {
+        try {
+            const pluginDir = path.resolve(process.cwd(), 'plugins', pluginId);
+            const migrationsDir = path.join(pluginDir, 'migrations');
+
+            if (!(await fs.pathExists(pluginDir))) {
+                console.error(chalk.red(`Error: Plugin plugins/${pluginId} does not exist.`));
+                process.exit(1);
+            }
+
+            await fs.ensureDir(migrationsDir);
+
+            // Get existing migrations to determine the next number
+            const files = await fs.readdir(migrationsDir);
+            const migrationFiles = files.filter(f => f.endsWith('.sql'));
+
+            let nextNum = 1;
+            if (migrationFiles.length > 0) {
+                const numbers = migrationFiles
+                    .map(f => parseInt(f.split('_')[0]))
+                    .filter(n => !isNaN(n));
+                if (numbers.length > 0) {
+                    nextNum = Math.max(...numbers) + 1;
+                }
+            }
+
+            const slug = (name || 'migration')
+                .toLowerCase()
+                .replace(/ /g, '-')
+                .replace(/[^a-z0-9-]/g, '');
+
+            const filename = `${nextNum.toString().padStart(3, '0')}_${slug}.sql`;
+            const filePath = path.join(migrationsDir, filename);
+
+            const content = `-- Migration: ${name || 'New Migration'}
+-- Created at: ${new Date().toISOString()}
+
+-- Write your SQL here:
+-- CREATE TABLE example (...);
+`;
+
+            await fs.writeFile(filePath, content);
+
+            console.log(chalk.green(`\n✔ Migration created: `) + chalk.white(`plugins/${pluginId}/migrations/${filename}`));
+
+        } catch (err) {
+            console.error(chalk.red('Error creating migration:'), err);
+            process.exit(1);
+        }
+    });
+
 cli.help();
 cli.version('0.1.0');
 
